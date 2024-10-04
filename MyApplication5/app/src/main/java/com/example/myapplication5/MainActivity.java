@@ -1,10 +1,7 @@
-package com.example.myapplication3;
+package com.example.myapplication5;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,11 +23,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void Google(View view){
-        Intent ejemplo=new Intent(Intent.ACTION_VIEW);
-        ejemplo.setData(Uri.parse("http://www.google.es"));
+    /*public void Camara(View view){
+        Intent ejemplo=new Intent(android.media.);
         startActivity(ejemplo);
-    }
-
-
+    }*/
 }

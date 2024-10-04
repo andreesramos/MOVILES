@@ -58,5 +58,7 @@ public class Actividad1 extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.i("EJEMPLO", "Estoy onDestroy");
+        Intent ejemplo=new Intent(this, MainActivity.class);
+        startActivity(ejemplo);
     }
 }
