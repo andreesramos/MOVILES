@@ -1,8 +1,7 @@
-package com.example.myapplication5;
+package com.example.myapplication6;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -25,8 +24,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void Camara(View view){
-        Intent ejemplo=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    public void enviarDatos(View view){
+        Intent ejemplo=new Intent(MainActivity.this, SecondActivity.class);
+        ejemplo.putExtra("cadena", "Hola buenas tardes");
+        ejemplo.putExtra("decimal", 16.7);
         startActivity(ejemplo);
     }
 }
