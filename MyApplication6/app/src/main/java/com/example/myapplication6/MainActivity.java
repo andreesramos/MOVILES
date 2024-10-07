@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String myString = "Hola";
+                String myString = "Hola, buenas tardes";
                 double myDouble = 116.7;
 
                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
