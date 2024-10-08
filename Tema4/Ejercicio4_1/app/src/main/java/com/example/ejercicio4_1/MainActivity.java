@@ -25,12 +25,23 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /*Button boton1=findViewById(R.id.button_primero);
-    boton1.setOnClickListener(new View.OnClickListener(){
-        @Override
-        public void onClick(View v){
-            Intent intent=new Intent(MainActivity.this, Primero.class);
-            startActivity(intent);
-        }
-    });*/
+    public void primero(View view){
+        Intent primero=new Intent(this, Primero.class);
+        startActivity(primero);
+    }
+
+    public void segundo(View view){
+        Intent segundo=new Intent(this, Segundo.class);
+        startActivity(segundo);
+    }
+
+    public void tercero(View view){
+        Intent tercero=new Intent(this, Tercero.class);
+        startActivity(tercero);
+    }
+
+    public void cuarto(View view){
+        Intent cuarto=new Intent(this, Cuarto.class);
+        startActivity(cuarto);
+    }
 }

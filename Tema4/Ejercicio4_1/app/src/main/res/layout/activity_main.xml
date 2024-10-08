@@ -17,27 +17,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Primera actividad"/>
+            android:text="Primera actividad"
+            android:onClick="primero"/>
 
         <Button
             android:id="@+id/button_segundo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Segunda actividad"/>
+            android:text="Segunda actividad"
+            android:onClick="segundo"/>
 
         <Button
             android:id="@+id/button_tercero"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Tercera actividad"/>
+            android:text="Tercera actividad"
+            android:onClick="tercero"/>
 
         <Button
             android:id="@+id/button_cuarto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Cuarta actividad"/>
+            android:text="Cuarta actividad"
+            android:onClick="cuarto"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
