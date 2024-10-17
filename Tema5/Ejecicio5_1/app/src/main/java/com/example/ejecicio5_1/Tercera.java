@@ -12,19 +12,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Segunda extends AppCompatActivity {
+public class Tercera extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_segunda);
-        LinearLayout layout= findViewById(R.id.texto2);
-        TextView miTexto= new TextView(this);
-        miTexto.setText("Texto construido desde java\nTamaño 20dp, Itálic y color Blue");
+        setContentView(R.layout.activity_tercera);
+        LinearLayout layout=findViewById(R.id.layout1);
+        TextView miTexto= layout.findViewById(R.id.texto3);
+        miTexto.append("\nTexto añadido con Append desde Java");
+        miTexto.setTypeface(null, Typeface.ITALIC);
         miTexto.setTextColor(Color.BLUE);
         miTexto.setTextSize(20);
-        miTexto.setTypeface(null, Typeface.ITALIC);
-        layout.addView(miTexto);
     }
 }
