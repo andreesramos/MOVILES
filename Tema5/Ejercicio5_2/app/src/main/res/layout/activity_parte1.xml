@@ -7,4 +7,20 @@
     android:layout_height="match_parent"
     tools:context=".Parte1">
 
+    <Button
+        android:id="@+id/boton1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="BOTÓN"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:onClick="pulsado"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/noPulsado"
+        android:text="BOTÓN SIN PULSAR"
+        android:gravity="center"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
