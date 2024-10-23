@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/rotar1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Rotar1"
+        android:onClick="rotar1"/>
+
+    <Button
+        android:id="@+id/rotar2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Rotar2"
+        android:onClick="rotar2"/>
+
+    <Button
+        android:id="@+id/rotar3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Rotar3"
+        android:onClick="rotar3"/>
+
+    <Button
+        android:id="@+id/alfa1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Alfa1"
+        android:onClick="alfa1"/>
+
+    <Button
+        android:id="@+id/alfa2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Alfa2"
+        android:onClick="alfa2"/>
+
+    <Button
+        android:id="@+id/escala1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Escala1"
+        android:onClick="escala1"/>
+
+    <Button
+        android:id="@+id/escala2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Escala2"
+        android:onClick="escala2"/>
+
+    <Button
+        android:id="@+id/mueve1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Mueve1"
+        android:onClick="mueve1"/>
+
+    <Button
+        android:id="@+id/mueve2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Mueve2"
+        android:onClick="mueve2"/>
+
+    <Button
+        android:id="@+id/varios1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Varios1"
+        android:onClick="varios1"/>
+
+    <Button
+        android:id="@+id/varios2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Varios2"
+        android:onClick="varios2"/>
+
+</LinearLayout>

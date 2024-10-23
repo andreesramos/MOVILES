@@ -1,5 +1,6 @@
 package com.example.ejercicio5_2;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,8 +30,10 @@ public class Parte2 extends AppCompatActivity implements View.OnClickListener{
         TextView miTexto=(TextView)findViewById(R.id.miTexto);
         if(view.getId() == R.id.miBoton1) {
             miTexto.setText("BOTON 1 PULSADO");
+            miTexto.setTextColor(Color.RED);
         }else if(view.getId() == R.id.miBoton2) {
             miTexto.setText("BOTON 2 PULSADO");
+            miTexto.setTextColor(Color.BLUE);
         }
 
     }
