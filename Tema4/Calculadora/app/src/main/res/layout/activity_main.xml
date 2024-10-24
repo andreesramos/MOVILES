@@ -11,53 +11,77 @@
     android:orientation="horizontal"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="VISOR"
+        android:inputType="number"
+        android:layout_columnSpan="3"
+        android:layout_gravity="fill"/>
+
     <Button
+        android:id="@+id/division"
         android:text="/"
         android:layout_column="3"
-        android:backgroundTint="#929292"/>
+        style="@style/MyMaterialButtonStyle"
+        android:onClick="dividir"/>
 
     <Button android:text="1"
-        android:backgroundTint="#161616"/>
+        style="@style/MyMaterialButtonStyle"/>
     <Button android:text="2"
-        android:backgroundTint="#161616"/>
+        style="@style/MyMaterialButtonStyle"/>
     <Button android:text="3"
-        android:backgroundTint="#161616"/>
+        style="@style/MyMaterialButtonStyle"/>
     <Button android:text="*"
-        android:backgroundTint="#929292"/>
+        android:id="@+id/multi"
+        style="@style/MyMaterialButtonStyle"
+        android:onClick="multiplicar"/>
     <Button android:text="4"
-        android:backgroundTint="#161616"/>
+        style="@style/MyMaterialButtonStyle"/>
     <Button android:text="5"
-        android:backgroundTint="#161616"/>
+        style="@style/MyMaterialButtonStyle"/>
     <Button android:text="6"
-        android:backgroundTint="#161616"/>
+        style="@style/MyMaterialButtonStyle"/>
     <Button android:text="-"
-        android:backgroundTint="#929292"/>
+        android:id="@+id/menos"
+        style="@style/MyMaterialButtonStyle"
+        android:onClick="restar"/>
     <Button android:text="7"
-        android:backgroundTint="#161616"/>
+        style="@style/MyMaterialButtonStyleBis"/>
     <Button android:text="8"
-        android:backgroundTint="#161616"/>
+        style="@style/MyMaterialButtonStyleBis"/>
     <Button android:text="9"
-        android:backgroundTint="#161616"/>
+        style="@style/MyMaterialButtonStyleBis"/>
 
     <Button
+        android:id="@+id/mas"
         android:text="+"
-        android:layout_rowSpan="3"
+        android:layout_rowSpan="2"
         android:layout_gravity="fill"
-        android:backgroundTint="#929292"/>
+        style="@style/MyMaterialButtonStyleBis"
+        android:onClick="sumar"/>
 
     <Button
         android:text="0"
         android:layout_columnSpan="2"
         android:layout_gravity="fill"
-        android:backgroundTint="#161616"/>
+        style="@style/MyMaterialButtonStyleBis"/>
 
-    <Button android:text="00"
-        android:backgroundTint="#929292"/>
+    <Button android:text=","
+        style="@style/MyMaterialButtonStyleBis"/>
 
     <Button
+        android:id="@+id/igual"
         android:text="="
         android:layout_columnSpan="3"
         android:layout_gravity="fill"
-        android:backgroundTint="#e39c46"/>
+        style="@style/MyMaterialButtonStyleBis"
+        android:onClick="igual"/>
+
+    <Button android:text="^"
+        android:id="@+id/potencia"
+        style="@style/MyMaterialButtonStyleBis"
+        android:onClick="potencia"/>
 
 </GridLayout>
