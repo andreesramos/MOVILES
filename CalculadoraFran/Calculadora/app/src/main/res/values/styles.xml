@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:background">@drawable/button_background</item>
+        <item name="backgroundTint">@color/black</item>
+    </style>
+</resources>
