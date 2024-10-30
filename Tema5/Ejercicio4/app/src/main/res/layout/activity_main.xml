@@ -6,8 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_margin="10dp"
     tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="PROGRAMACIÓN MULTIMEDIA"
+        android:background="#ffff00"
+        android:gravity="center"/>
 
     <EditText
         android:id="@+id/num1"

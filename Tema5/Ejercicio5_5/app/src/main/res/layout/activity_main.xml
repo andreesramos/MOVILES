@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/texto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="#ff0000"/>
+
+    <RadioGroup
+        android:id="@+id/grupoRadio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/lunes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LUNES"/>
+        <RadioButton
+            android:id="@+id/martes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MARTES"/>
+        <RadioButton
+            android:id="@+id/miercoles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MIERCOLES"/>
+        <RadioButton
+            android:id="@+id/jueves"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="JUEVES"/>
+        <RadioButton
+            android:id="@+id/viernes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VIERNES"/>
+        <RadioButton
+            android:id="@+id/sabado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SABADO"/>
+        <RadioButton
+            android:id="@+id/domingo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DOMINGO"/>
+    </RadioGroup>
+
+</LinearLayout>
