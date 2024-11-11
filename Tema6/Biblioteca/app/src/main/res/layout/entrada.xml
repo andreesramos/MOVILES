@@ -2,29 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingBottom="10dp">
 
     <ImageView
         android:id="@+id/imagen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"/>
+        android:layout_width="110dp"
+        android:layout_height="100dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/quijote"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:gravity="center">
 
         <TextView
-            android:id="@+id/texto"
+            android:id="@+id/texto_titulo"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:text="TITULO"
+            android:textStyle="bold"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        <TextView
+            android:id="@+id/titulo_autor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AUTOR"/>
 
         <RatingBar
             android:id="@+id/rating"
@@ -32,7 +37,8 @@
             android:layout_height="wrap_content"
             android:numStars="5"
             android:rating="1.0"
-            android:stepSize="1.0"/>
+            android:stepSize="0.5"
+            />
     </LinearLayout>
 
 </LinearLayout>
