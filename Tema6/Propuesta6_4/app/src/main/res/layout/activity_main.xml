@@ -12,13 +12,13 @@
     <ListView
         android:id="@+id/lista"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="5"/>
 
     <TextView
         android:id="@+id/texto"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
         android:gravity="center"
         android:text="TOCA UNA OPCION"
         android:textColor="#ff0000"

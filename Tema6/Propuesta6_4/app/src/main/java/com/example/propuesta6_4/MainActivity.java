@@ -1,6 +1,7 @@
 package com.example.propuesta6_4;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
                             texto.setText("MARCADA UNA OPCION");
                         }
                     });
+
+
                 }
             }
         });
@@ -69,9 +72,10 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long id) {
                 Encapsulador elegido = (Encapsulador) adapterView.getItemAtPosition(i);
                 CharSequence textoElegido = "Seleccionado: " + elegido.get_textoContenido();
-                texto.setText(elegido.get_textoContenido());
+                texto.setText(textoElegido);
             }
         });
+
     }
 
     class Encapsulador{
