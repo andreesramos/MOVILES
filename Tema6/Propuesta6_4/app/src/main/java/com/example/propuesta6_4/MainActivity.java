@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -20,6 +22,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private ListView lista;
+    //private GridView lista;
+    //private Spinner lista;
     private TextView texto;
     private RadioButton radioButton_pulsado;
 
@@ -29,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         lista=(ListView) findViewById(R.id.lista);
+        //lista=(GridView) findViewById(R.id.lista);
+        //lista=(Spinner) findViewById(R.id.lista);
         texto=(TextView) findViewById(R.id.texto);
         ArrayList<Encapsulador> datos=new ArrayList<Encapsulador>();
 
@@ -52,29 +58,40 @@ public class MainActivity extends AppCompatActivity {
                     texto_superior_entrada.setText(((Encapsulador) entrada).get_textoTitulo());
                     texto_inferior_entrada.setText(((Encapsulador) entrada).get_textoContenido());
                     imagen_entrada.setImageResource(((Encapsulador) entrada).get_idImagen());
+                    Encapsulador encapsulador = (Encapsulador) entrada;
 
-                    miRadio.setOnClickListener(new View.OnClickListener(){
+                    //Marcada una opcion
+                    /*miRadio.setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View v){
                             if(radioButton_pulsado != null) radioButton_pulsado.setChecked(false);
                             radioButton_pulsado = (RadioButton) v;
                             texto.setText("MARCADA UNA OPCION");
                         }
+                    });*/
+
+                    miRadio.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if(radioButton_pulsado != null) radioButton_pulsado.setChecked(false);
+                            radioButton_pulsado=miRadio;
+                            radioButton_pulsado.setChecked(true);
+                            texto.setText(encapsulador.get_textoContenido());
+                        }
                     });
-
-
                 }
             }
         });
 
-        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //Muestra info al pulsar en el objeto del listview
+        /*lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long id) {
                 Encapsulador elegido = (Encapsulador) adapterView.getItemAtPosition(i);
                 CharSequence textoElegido = "Seleccionado: " + elegido.get_textoContenido();
                 texto.setText(textoElegido);
             }
-        });
+        });*/
 
     }
 
