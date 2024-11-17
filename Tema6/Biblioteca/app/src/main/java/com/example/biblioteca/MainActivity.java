@@ -1,11 +1,10 @@
 package com.example.biblioteca;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RatingBar;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,54 +13,54 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ListView lista;
-    private RatingBar rating;
+    private EditText usuario;
+    private EditText clave;
+    ArrayList<Usuario> usuarios=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.lista);
-        lista=(ListView) findViewById(R.id.lista);
-        ArrayList<Encapsulador> datos=new ArrayList<>();
+        setContentView(R.layout.activity_main);
 
-        datos.add(new Encapsulador(R.drawable.quijote, "DON QUIJOTE DE LA MANCHA", "MIGUEL DE CERVANTES", 0));
-        datos.add(new Encapsulador(R.drawable.principito, "EL PRINCIPITO", "ANTOINE DE SAINT-EXUPÉRY", 0));
-        datos.add(new Encapsulador(R.drawable.anillos, "EL SEÑOR DE LOS ANILLOS", "J.R.R. TOLKIEN", 0));
-
-        lista.setAdapter(new Adaptador(this, R.layout.entrada, datos) {
-            @Override
-            public void onEntrada(Object entrada, View view) {
-                if(entrada!=null){
-                    TextView texto_superior_entrada=(TextView) view.findViewById(R.id.texto_titulo);
-                    TextView texto_inferior_entrada=(TextView) view.findViewById(R.id.titulo_autor);
-                    ImageView imagen_entrada=(ImageView) view.findViewById(R.id.imagen);
-                    RatingBar miRating=(RatingBar) view.findViewById(R.id.rating);
-                    texto_superior_entrada.setText(((Encapsulador) entrada).get_textoTitulo());
-                    texto_inferior_entrada.setText(((Encapsulador) entrada).get_textoContenido());
-                    imagen_entrada.setImageResource(((Encapsulador)entrada).get_idImagen());
-
-                    //onClickListener
-                }
-            }
-        });
+        usuarios.add(new Usuario("andres", "andres"));
+        usuarios.add(new Usuario("pablo", "pablo"));
+        usuarios.add(new Usuario("marcos", "marcos"));
     }
 
-    class Encapsulador{
-        private int imagen;
-        private String titulo, autor;
-        private float dato1;
+    class Usuario{
+        private String nombre;
+        private String clave;
 
-        public Encapsulador(int idImagen, String textoTitulo, String textoAutor, float numEstrellas){
-            this.imagen=idImagen;
-            this.titulo=textoTitulo;
-            this.autor=textoAutor;
-            this.dato1=numEstrellas;
+        public Usuario(String nombre, String clave){
+            this.nombre=nombre;
+            this.clave=clave;
         }
 
-        public String get_textoTitulo(){return titulo;}
-        public String get_textoContenido(){return autor;}
-        public int get_idImagen(){return imagen;}
-        public float get_rating(){return dato1;}
+        public String getNombre(){return this.nombre;}
+        public String getClave(){return this.clave;}
+    }
+
+    public void acceder(View view){
+        usuario=(EditText) findViewById(R.id.usuario);
+        clave=(EditText) findViewById(R.id.clave);
+
+
+        String nombreIngresado=usuario.getText().toString();
+        String claveIngresada=clave.getText().toString();
+        boolean valido=false;
+
+        for(Usuario u : usuarios){
+            if(nombreIngresado.equals(u.getNombre()) && claveIngresada.equals(u.getClave())){
+                valido=true;
+            }
+        }
+
+        if(valido){
+            Intent acceder=new Intent(this, Lista.class);
+            startActivity(acceder);
+        }else{
+            Toast.makeText(MainActivity.this, "Usuario no existente o contraseña incorrecta", Toast.LENGTH_SHORT).show();
+        }
     }
 }

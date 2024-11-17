@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="50dp">
+    android:paddingTop="50dp"
+    android:gravity="center_horizontal">
 
     <TextView
         android:id="@+id/titulo"
@@ -18,17 +19,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--<ImageView
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:src="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titulo"
+        app:layout_constraintBottom_toTopOf="@+id/usuario"/>
+
+    <EditText
+        android:id="@+id/usuario"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/logo"/>-->
+        android:hint="USUARIO:"
+        android:imeOptions="actionDone"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <EditText
+        android:id="@+id/clave"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:hint="CONTRASEÑA:"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usuario" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
         android:text="ACCEDER"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:onClick="acceder"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
+
