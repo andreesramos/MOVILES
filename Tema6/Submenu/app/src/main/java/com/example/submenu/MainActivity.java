@@ -1,8 +1,8 @@
-package com.example.optionsmenu;
+package com.example.submenu;
 
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
+import android.view.SubMenu;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,8 @@ public class MainActivity extends AppCompatActivity {
 
     static final int MnOp1=1;
     static final int MnOp2=2;
+    static final int MnOp1_1=11;
+    static final int MnOp1_2=12;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,25 +27,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu, menu);
+        SubMenu smnu= menu.addSubMenu(Menu.NONE, MnOp1, Menu.NONE, "Opcion A desde Java");
+        smnu.add(Menu.NONE, MnOp1_1, Menu.NONE, "Opcion A.1");
+        smnu.add(Menu.NONE, MnOp1_2, Menu.NONE, "Opcion A.2");
+        menu.add(Menu.NONE, MnOp2, Menu.NONE, "Opcion B desde Java");
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        String mensaje="";
-        int id=item.getItemId();
-        if (id == R.id.MnOp1) {
-            // Código para Opcion de menu A
-            return true;
-        } else if (id == R.id.MnOp2) {
-            // Código para Opcion de menu B
-            return true;
-        } else if (id == R.id.MnOp3) {
-            // Código para Opcion de menu C
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
     }
 }
