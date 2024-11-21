@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         smnu.add(Menu.NONE, MnOp1_1, Menu.NONE, "Opcion A.1");
         smnu.add(Menu.NONE, MnOp1_2, Menu.NONE, "Opcion A.2");
         menu.add(Menu.NONE, MnOp2, Menu.NONE, "Opcion B desde Java");
+        getMenuInflater().inflate(R.menu.opciones, menu);
         return true;
     }
 }
