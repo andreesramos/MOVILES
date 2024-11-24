@@ -1,19 +1,18 @@
 package com.example.ejercicio6_9;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,8 +34,34 @@ public class MainActivity extends AppCompatActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater=getMenuInflater();
-        AdapterView.AdapterContextMenuInfo info=(AdapterView.AdapterContextMenuInfo) menuInfo;
+        AdapterContextMenuInfo info=(AdapterContextMenuInfo) menuInfo;
         menu.setHeaderTitle(lista.getAdapter().getItem(info.position).toString());
-        inflater.inflate(R.menu.menu, menu);
+        if(info.position==0){
+            inflater.inflate(R.menu.menu_lista1, menu);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item){
+        AdapterView.AdapterContextMenuInfo info= (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        String selectedOpction = (String) lista.getAdapter().getItem(info.position);
+        if("OPCION A".equals(selectedOpction)){
+            Toast.makeText(this, "Opcion A seleccionada", Toast.LENGTH_SHORT).show();
+            return true;
+        }else if("OPCION B".equals(selectedOpction)){
+            Toast.makeText(this, "Opcion B seleccionada", Toast.LENGTH_SHORT).show();
+            return true;
+        }else if("OPCION C".equals(selectedOpction)){
+            Toast.makeText(this, "Opcion C seleccionada", Toast.LENGTH_SHORT).show();
+            return true;
+        }else if("OPCION D".equals(selectedOpction)){
+            Toast.makeText(this, "Opcion D seleccionada", Toast.LENGTH_SHORT).show();
+            return true;
+        }else if("OPCION E".equals(selectedOpction)){
+            Toast.makeText(this, "Opcion E seleccionada", Toast.LENGTH_SHORT).show();
+            return true;
+        }else{
+            return super.onContextItemSelected(item);
+        }
     }
 }

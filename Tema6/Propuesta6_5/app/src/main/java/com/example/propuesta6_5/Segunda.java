@@ -35,7 +35,7 @@ public class Segunda extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        SubMenu submenu1 = menu.addSubMenu(Menu.NONE, MnOp1, Menu.NONE, "DÍAS DE SAMANA");
+        SubMenu submenu1 = menu.addSubMenu(Menu.NONE, MnOp1, Menu.NONE, "DÍAS DE SAMANA").setIcon(R.drawable.logo);
         SubMenu submenu2 = menu.addSubMenu(Menu.NONE, MnOp2, Menu.NONE, "MESES DEL AÑO");
         submenu1.add(Menu.NONE, MnOp1_1, Menu.NONE, "LUNES");
         submenu1.add(Menu.NONE, MnOp1_2, Menu.NONE, "MARTES");
