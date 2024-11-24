@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/opcA" android:title="Opcion de menu A"></item>
+    <item android:id="@+id/opcB" android:title="Opcion de menu B">
+        <menu>
+            <item android:id="@+id/opcB1" android:title="Opcion B.1"></item>
+            <item android:id="@+id/opcB2" android:title="Opcion B.2"></item>
+        </menu>
+    </item>
+    <item android:id="@+id/opcC" android:title="Opcion de menu C"></item>
+</menu>

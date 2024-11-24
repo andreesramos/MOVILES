@@ -23,10 +23,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        String[] datos = new String[]{"OPCION A", "OPCION B", "OPCION C", "OPCION D", "OPCION E"};
         lista = (ListView) findViewById(R.id.lista);
+
+        String[] datos = new String[]{"OPCION A", "OPCION B", "OPCION C", "OPCION D", "OPCION E"};
+
         ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, datos);
         lista.setAdapter(adaptador);
+
         registerForContextMenu(lista);
     }
 
@@ -42,23 +45,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item){
-        AdapterView.AdapterContextMenuInfo info= (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         String selectedOpction = (String) lista.getAdapter().getItem(info.position);
-        if("OPCION A".equals(selectedOpction)){
-            Toast.makeText(this, "Opcion A seleccionada", Toast.LENGTH_SHORT).show();
+        if (item.getItemId() == R.id.ListaOpA1) {
+            Toast.makeText(this, "Opcion 1A seleccionada", Toast.LENGTH_SHORT).show();
             return true;
-        }else if("OPCION B".equals(selectedOpction)){
-            Toast.makeText(this, "Opcion B seleccionada", Toast.LENGTH_SHORT).show();
-            return true;
-        }else if("OPCION C".equals(selectedOpction)){
-            Toast.makeText(this, "Opcion C seleccionada", Toast.LENGTH_SHORT).show();
-            return true;
-        }else if("OPCION D".equals(selectedOpction)){
-            Toast.makeText(this, "Opcion D seleccionada", Toast.LENGTH_SHORT).show();
-            return true;
-        }else if("OPCION E".equals(selectedOpction)){
-            Toast.makeText(this, "Opcion E seleccionada", Toast.LENGTH_SHORT).show();
+        }else if(item.getItemId() == R.id.ListaOpA2){
+            Toast.makeText(this, "Opcion 2A seleccionada", Toast.LENGTH_SHORT).show();
             return true;
         }else{
             return super.onContextItemSelected(item);
