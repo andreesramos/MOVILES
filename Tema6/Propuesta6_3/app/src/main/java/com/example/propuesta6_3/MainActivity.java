@@ -22,10 +22,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         TextView texto = findViewById(R.id.texto);
         Spinner spinner = findViewById(R.id.spinner);
+        Spinner spinner2 = findViewById(R.id.spinner2);
         final String[] datos = new String[]{"España", "Alemania", "Francia", "Belgica", "Croacia", "Portugal", "Paises Bajos", "Italia", "Dinamarca", "Suecia"};
         ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, datos);
         spinner.setAdapter(adaptador);
+        spinner2.setAdapter(adaptador);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
