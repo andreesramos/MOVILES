@@ -2,6 +2,7 @@ package com.example.biblioteca;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,19 +27,6 @@ public class MainActivity extends AppCompatActivity {
         usuarios.add(new Usuario("andres", "andres"));
         usuarios.add(new Usuario("pablo", "pablo"));
         usuarios.add(new Usuario("marcos", "marcos"));
-    }
-
-    class Usuario{
-        private String nombre;
-        private String clave;
-
-        public Usuario(String nombre, String clave){
-            this.nombre=nombre;
-            this.clave=clave;
-        }
-
-        public String getNombre(){return this.nombre;}
-        public String getClave(){return this.clave;}
     }
 
     public void acceder(View view){

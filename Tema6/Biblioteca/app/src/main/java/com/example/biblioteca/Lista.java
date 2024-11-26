@@ -1,6 +1,7 @@
 package com.example.biblioteca;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -45,6 +46,12 @@ public class Lista extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
+        return true;
     }
 
     class Encapsulador{
