@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="clave 1"
+        android:title="PREFERENCIA 1"
+        android:summary="Descripcion de la preferencia 1"/>
+
+    <EditTextPreference
+        android:key="clave 2"
+        android:title="PREFERENCIA 2"
+        android:summary="Descripcion de la preferencia 2"
+        android:dialogTitle="INTRODUCE VALOR"/>
+
+    <ListPreference
+        android:key="clave 3"
+        android:title="PREFERENCIA 3"
+        android:summary="Descripcion de ls preferencia 3"
+        android:dialogTitle="ARTISTA PREFERENCIA"
+        android:entries="@array/lista"
+        android:entryValues="@array/claveLista"/>
+</PreferenceScreen>
