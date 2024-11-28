@@ -1,8 +1,11 @@
 package com.example.biblioteca;
 
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -46,12 +49,22 @@ public class Lista extends AppCompatActivity {
                 }
             }
         });
+        registerForContextMenu(lista);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_principal, menu);
         return true;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater=getMenuInflater();
+        AdapterView.AdapterContextMenuInfo info=(AdapterView.AdapterContextMenuInfo) menuInfo;
+        menu.setHeaderTitle("ELIGE UNA OPCION");
+        inflater.inflate(R.menu.menu_lista, menu);
     }
 
     class Encapsulador{
