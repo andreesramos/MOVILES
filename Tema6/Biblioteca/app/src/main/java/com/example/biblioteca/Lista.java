@@ -1,9 +1,11 @@
 package com.example.biblioteca;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -19,7 +21,9 @@ import java.util.ArrayList;
 public class Lista extends AppCompatActivity {
 
     private ListView lista;
+    private ArrayList<Encapsulador> datos;
     private RatingBar rating;
+    private Adaptador adaptador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +31,13 @@ public class Lista extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_lista);
         lista=(ListView) findViewById(R.id.lista);
-        ArrayList<Lista.Encapsulador> datos=new ArrayList<>();
+        datos=new ArrayList<>();
 
-        datos.add(new Lista.Encapsulador(R.drawable.quijote, "DON QUIJOTE DE LA MANCHA", "MIGUEL DE CERVANTES", 0));
-        datos.add(new Lista.Encapsulador(R.drawable.principito, "EL PRINCIPITO", "ANTOINE DE SAINT-EXUPÉRY", 0));
-        datos.add(new Lista.Encapsulador(R.drawable.anillos, "EL SEÑOR DE LOS ANILLOS", "J.R.R. TOLKIEN", 0));
+        datos.add(new Encapsulador(R.drawable.quijote, "DON QUIJOTE DE LA MANCHA", "MIGUEL DE CERVANTES", 0));
+        datos.add(new Encapsulador(R.drawable.principito, "EL PRINCIPITO", "ANTOINE DE SAINT-EXUPÉRY", 0));
+        datos.add(new Encapsulador(R.drawable.anillos, "EL SEÑOR DE LOS ANILLOS", "J.R.R. TOLKIEN", 0));
 
-        lista.setAdapter(new Adaptador(this, R.layout.entrada, datos) {
+        adaptador = new Adaptador(this, R.layout.entrada, datos) {
             @Override
             public void onEntrada(Object entrada, View view) {
                 if(entrada!=null){
@@ -48,7 +52,8 @@ public class Lista extends AppCompatActivity {
                     //onClickListener
                 }
             }
-        });
+        };
+        lista.setAdapter(adaptador);
         registerForContextMenu(lista);
     }
 
@@ -59,6 +64,21 @@ public class Lista extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id=item.getItemId();
+        if(id==R.id.insertar){
+            Intent ins=new Intent(this, Insertar.class);
+            startActivity(ins);
+            return true;
+        }return super.onOptionsItemSelected(item);
+    }
+
+    public void insertar(Encapsulador nuevo){
+        datos.add(nuevo);
+        adaptador.notifyDataSetChanged();
+    }
+
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater=getMenuInflater();
@@ -66,6 +86,7 @@ public class Lista extends AppCompatActivity {
         menu.setHeaderTitle("ELIGE UNA OPCION");
         inflater.inflate(R.menu.menu_lista, menu);
     }
+
 
     class Encapsulador{
         private int imagen;
