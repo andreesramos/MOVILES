@@ -45,9 +45,11 @@ public class Lista extends AppCompatActivity {
                     TextView texto_inferior_entrada=(TextView) view.findViewById(R.id.titulo_autor);
                     ImageView imagen_entrada=(ImageView) view.findViewById(R.id.imagen);
                     RatingBar miRating=(RatingBar) view.findViewById(R.id.rating);
+
                     texto_superior_entrada.setText(((Lista.Encapsulador) entrada).get_textoTitulo());
                     texto_inferior_entrada.setText(((Lista.Encapsulador) entrada).get_textoContenido());
                     imagen_entrada.setImageResource(((Lista.Encapsulador)entrada).get_idImagen());
+                    miRating.setRating(((Lista.Encapsulador) entrada).get_rating());
 
                     //onClickListener
                 }
@@ -68,14 +70,39 @@ public class Lista extends AppCompatActivity {
         int id=item.getItemId();
         if(id==R.id.insertar){
             Intent ins=new Intent(this, Insertar.class);
-            startActivity(ins);
+            startActivityForResult(ins, 1);
             return true;
         }return super.onOptionsItemSelected(item);
     }
 
-    public void insertar(Encapsulador nuevo){
-        datos.add(nuevo);
-        adaptador.notifyDataSetChanged();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK){
+            if (requestCode == 1) {
+                String titulo = data.getStringExtra("titulo");
+                String autor = data.getStringExtra("autor");
+                Float rating = data.getFloatExtra("rating", 0);
+
+                datos.add(new Encapsulador(R.drawable.logo, titulo, autor, rating));
+                adaptador.notifyDataSetChanged();
+            } else if (requestCode == 2) {
+                int position = data.getIntExtra("position", -1);
+                if (position != -1) {
+                    String titulo = data.getStringExtra("titulo");
+                    String autor = data.getStringExtra("autor");
+                    float rating = data.getFloatExtra("rating", 0);
+
+                    Encapsulador elemento = datos.get(position);
+                    elemento.titulo = titulo;
+                    elemento.autor = autor;
+                    elemento.dato1 = rating;
+
+                    adaptador.notifyDataSetChanged();
+                }
+            }
+        }
     }
 
     @Override
@@ -85,6 +112,39 @@ public class Lista extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info=(AdapterView.AdapterContextMenuInfo) menuInfo;
         menu.setHeaderTitle("ELIGE UNA OPCION");
         inflater.inflate(R.menu.menu_lista, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int position = info.position;
+
+        if(item.getItemId() == R.id.modificar){
+            editarElemento(position);
+            return true;
+        }else if(item.getItemId() == R.id.eliminar){
+            eliminarElemento(position);
+            return true;
+        }else{
+            return super.onContextItemSelected(item);
+        }
+    }
+
+    private void editarElemento(int position){
+        Encapsulador elemento=datos.get(position);
+
+        Intent intent = new Intent(this, Insertar.class);
+        intent.putExtra("titulo", elemento.get_textoTitulo());
+        intent.putExtra("autor", elemento.get_textoContenido());
+        intent.putExtra("rating", elemento.get_rating());
+        intent.putExtra("position", position);
+
+        startActivityForResult(intent, 2);
+    }
+
+    private void eliminarElemento(int position) {
+        datos.remove(position);
+        adaptador.notifyDataSetChanged();
     }
 
 
