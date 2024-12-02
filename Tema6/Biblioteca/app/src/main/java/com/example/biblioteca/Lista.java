@@ -3,6 +3,8 @@ package com.example.biblioteca;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -87,6 +90,7 @@ public class Lista extends AppCompatActivity {
 
                 datos.add(new Encapsulador(R.drawable.logo, titulo, autor, rating));
                 adaptador.notifyDataSetChanged();
+                mostrarToast("Elemento insertado");
             } else if (requestCode == 2) {
                 int position = data.getIntExtra("position", -1);
                 if (position != -1) {
@@ -100,6 +104,7 @@ public class Lista extends AppCompatActivity {
                     elemento.dato1 = rating;
 
                     adaptador.notifyDataSetChanged();
+                    mostrarToast("Elemento modificado");
                 }
             }
         }
@@ -145,6 +150,25 @@ public class Lista extends AppCompatActivity {
     private void eliminarElemento(int position) {
         datos.remove(position);
         adaptador.notifyDataSetChanged();
+        mostrarToast("Elemento eliminado");
+    }
+
+    private void mostrarToast(String mensaje/*, int icono*/){
+        LayoutInflater inflater=getLayoutInflater();
+        View layout=inflater.inflate(R.layout.toast, null);
+
+        TextView textoToast=layout.findViewById(R.id.textoToast);
+        ImageView imagenToast=layout.findViewById(R.id.imagenToast);
+
+        textoToast.setText(mensaje);
+        //imagenToast.setImageResource(icono);
+
+        Toast toast=new Toast(getApplicationContext());
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER, 0, 0);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+
     }
 
 
