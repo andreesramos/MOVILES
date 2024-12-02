@@ -1,5 +1,6 @@
 package com.example.biblioteca;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -128,7 +130,7 @@ public class Lista extends AppCompatActivity {
             editarElemento(position);
             return true;
         }else if(item.getItemId() == R.id.eliminar){
-            eliminarElemento(position);
+            mostrarDialogo(position);
             return true;
         }else{
             return super.onContextItemSelected(item);
@@ -171,6 +173,29 @@ public class Lista extends AppCompatActivity {
 
     }
 
+    public void mostrarDialogo(int position){
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setMessage("¿SEGURO QUE QUIERES ELIMINAR?")
+                .setTitle("CONFIRMACIÓN")
+                .setIcon(R.drawable.eliminar);
+
+        builder.setPositiveButton("CONFIRMAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                eliminarElemento(position);
+            }
+        });
+
+        builder.setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getApplicationContext(),"Se ha cancelado la eliminacion", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        AlertDialog dialogo= builder.create();
+        dialogo.show();
+    }
 
     class Encapsulador{
         private int imagen;
