@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/insertar" android:title="Insertar Libro"></item>
-    <item android:id="@+id/listado1" android:title="Listado 1"></item>
-    <item android:id="@+id/listado2" android:title="Listado 2"></item>
+    <item android:id="@+id/listadoTitulo" android:title="Listado por titulo"></item>
+    <item android:id="@+id/listadoAutor" android:title="Listado por autor"></item>
 </menu>

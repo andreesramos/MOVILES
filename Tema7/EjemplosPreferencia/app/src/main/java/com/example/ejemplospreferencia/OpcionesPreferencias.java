@@ -15,13 +15,14 @@ public class OpcionesPreferencias extends PreferenceActivity {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.ejemplos);
 
+        /*boton.setOnClickListener(new View.OnClickListener()){
+            @Override
+            public void onClick(View v){
+                startActivity(new Intent(OpcionesPreferencias.this, OpcionesPreferencias.class));
+            }
+        }*/
     }
 
-    /*boton.setOnClickListener(new View.OnClickListener()){
-        @Override
-        public void onClick(View v){
-            startActivity(new Intent(OpcionesPreferencias.this, OpcionesPreferencias.class));
-        }
-    }*/
+
 
 }

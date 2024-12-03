@@ -22,6 +22,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Lista extends AppCompatActivity {
 
@@ -77,7 +78,10 @@ public class Lista extends AppCompatActivity {
             Intent ins=new Intent(this, Insertar.class);
             startActivityForResult(ins, 1);
             return true;
-        }return super.onOptionsItemSelected(item);
+        } else if (id==R.id.listadoTitulo) {
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -155,7 +159,11 @@ public class Lista extends AppCompatActivity {
         mostrarToast("Elemento eliminado");
     }
 
-    private void mostrarToast(String mensaje/*, int icono*/){
+    public void ordenarPorTitulo(){
+        
+    }
+
+    private void mostrarToast(String mensaje){
         LayoutInflater inflater=getLayoutInflater();
         View layout=inflater.inflate(R.layout.toast, null);
 
@@ -163,7 +171,6 @@ public class Lista extends AppCompatActivity {
         ImageView imagenToast=layout.findViewById(R.id.imagenToast);
 
         textoToast.setText(mensaje);
-        //imagenToast.setImageResource(icono);
 
         Toast toast=new Toast(getApplicationContext());
         toast.setGravity(Gravity.CENTER|Gravity.CENTER, 0, 0);
