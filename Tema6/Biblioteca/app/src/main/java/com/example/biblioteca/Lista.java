@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class Lista extends AppCompatActivity {
 
@@ -78,8 +79,12 @@ public class Lista extends AppCompatActivity {
             Intent ins=new Intent(this, Insertar.class);
             startActivityForResult(ins, 1);
             return true;
-        } else if (id==R.id.listadoTitulo) {
-
+        } else if (id==R.id.listadoAutor) {
+            ordenarPorAutor();
+            return true;
+        } else if (id==R.id.listadoRating) {
+            ordenarPorRating();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -159,8 +164,26 @@ public class Lista extends AppCompatActivity {
         mostrarToast("Elemento eliminado");
     }
 
-    public void ordenarPorTitulo(){
-        
+    public void ordenarPorAutor(){
+        Collections.sort(datos, new Comparator<Encapsulador>() {
+            @Override
+            public int compare(Encapsulador e1, Encapsulador e2) {
+                return e1.get_textoContenido().compareTo(e2.get_textoContenido());
+            }
+        });
+        adaptador.notifyDataSetChanged();
+        mostrarToast("Lista ordenada por autor");
+    }
+
+    public void ordenarPorRating(){
+        Collections.sort(datos, new Comparator<Encapsulador>() {
+            @Override
+            public int compare(Encapsulador e1, Encapsulador e2) {
+                return Float.compare(e2.get_rating(), e1.get_rating());
+            }
+        });
+        adaptador.notifyDataSetChanged();
+        mostrarToast("Lista ordenada por rating");
     }
 
     private void mostrarToast(String mensaje){

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="RatingBarTheme" parent="Widget.AppCompat.RatingBar">
+        <item name="colorAccent">#FFD700</item>
+        <item name="android:progressTint">#FFD700</item>
+    </style>
+</resources>
