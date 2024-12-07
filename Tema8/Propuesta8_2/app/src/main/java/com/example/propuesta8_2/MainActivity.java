@@ -27,6 +27,12 @@ public class MainActivity extends AppCompatActivity {
         final TabLayout tabLayout=(TabLayout) findViewById(R.id.tabLayout);
         paginador = (ViewPager) findViewById(R.id.contenedor2);
 
+        Adaptador adaptador= new Adaptador(getSupportFragmentManager(), tabLayout.getTabCount());
+        paginador.setAdapter(adaptador);
+        paginador.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        tabLayout.setupWithViewPager(paginador);
+
         TabLayout.Tab tab1=new TabLayout.Tab();
         tab1.setText("PRIMERO");
         tab1.setIcon(R.drawable.numero1);
@@ -43,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Fragment fragmento=null;
+
+                fragmento=adaptador.getItem(tab.getPosition());
 
                 paginador.setCurrentItem(tab.getPosition());
                 if(fragmento!=null){
@@ -67,10 +75,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Adaptador adaptador= new Adaptador(getSupportFragmentManager(), tabLayout.getTabCount());
-        paginador.setAdapter(adaptador);
-
-        paginador.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
     }
 
 
