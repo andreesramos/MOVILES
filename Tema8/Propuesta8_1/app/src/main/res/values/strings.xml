@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Propuesta8_1</string>
+    <string name="app_name">Propuesta 8_1</string>
+    <string name="cadena_barra_nuevo">Añadir</string>
+    <string name="cadena_barra_editar">Editar</string>
+    <string name="cadena_barra_configurar">Configurar</string>
+    <string name="cadena_barra_ayuda">Ayuda</string>
+    <string name="cadena_barra_acerca">Acerca de...</string>
 </resources>
