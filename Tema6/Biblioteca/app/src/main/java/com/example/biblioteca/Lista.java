@@ -40,9 +40,9 @@ public class Lista extends AppCompatActivity {
         lista=(ListView) findViewById(R.id.lista);
         datos=new ArrayList<>();
 
-        datos.add(new Encapsulador(R.drawable.quijote, "DON QUIJOTE DE LA MANCHA", "MIGUEL DE CERVANTES", 0));
-        datos.add(new Encapsulador(R.drawable.principito, "EL PRINCIPITO", "ANTOINE DE SAINT-EXUPÉRY", 0));
-        datos.add(new Encapsulador(R.drawable.anillos, "EL SEÑOR DE LOS ANILLOS", "J.R.R. TOLKIEN", 0));
+        datos.add(new Encapsulador(R.drawable.quijote, "DON QUIJOTE DE LA MANCHA", "MIGUEL DE CERVANTES", 0, 2024, 10, 24));
+        datos.add(new Encapsulador(R.drawable.principito, "EL PRINCIPITO", "ANTOINE DE SAINT-EXUPÉRY", 0, 2023, 6, 16));
+        datos.add(new Encapsulador(R.drawable.anillos, "EL SEÑOR DE LOS ANILLOS", "J.R.R. TOLKIEN", 0, 2024, 0, 8));
 
         adaptador = new Adaptador(this, R.layout.entrada, datos) {
             @Override
@@ -98,8 +98,11 @@ public class Lista extends AppCompatActivity {
                 String titulo = data.getStringExtra("titulo");
                 String autor = data.getStringExtra("autor");
                 Float rating = data.getFloatExtra("rating", 0);
+                int year = data.getIntExtra("year", 0);
+                int month = data.getIntExtra("month", 0);
+                int day = data.getIntExtra("day", 0);
 
-                datos.add(new Encapsulador(R.drawable.logo, titulo, autor, rating));
+                datos.add(new Encapsulador(R.drawable.logo, titulo, autor, rating, year, month, day));
                 adaptador.notifyDataSetChanged();
                 mostrarToast("Elemento insertado");
             } else if (requestCode == 2) {
@@ -108,11 +111,17 @@ public class Lista extends AppCompatActivity {
                     String titulo = data.getStringExtra("titulo");
                     String autor = data.getStringExtra("autor");
                     float rating = data.getFloatExtra("rating", 0);
+                    int year =data.getIntExtra("year", 0);
+                    int month=data.getIntExtra("month", 0);
+                    int day=data.getIntExtra("day", 0);
 
                     Encapsulador elemento = datos.get(position);
                     elemento.titulo = titulo;
                     elemento.autor = autor;
                     elemento.dato1 = rating;
+                    elemento.year = year;
+                    elemento.month = month;
+                    elemento.day = day;
 
                     adaptador.notifyDataSetChanged();
                     mostrarToast("Elemento modificado");
@@ -135,7 +144,10 @@ public class Lista extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int position = info.position;
 
-        if(item.getItemId() == R.id.modificar){
+        if(item.getItemId() == R.id.listar){
+            listarElemento(position);
+            return true;
+        }else if(item.getItemId() == R.id.modificar){
             editarElemento(position);
             return true;
         }else if(item.getItemId() == R.id.eliminar){
@@ -153,6 +165,9 @@ public class Lista extends AppCompatActivity {
         intent.putExtra("titulo", elemento.get_textoTitulo());
         intent.putExtra("autor", elemento.get_textoContenido());
         intent.putExtra("rating", elemento.get_rating());
+        intent.putExtra("year", elemento.getYear());
+        intent.putExtra("month", elemento.getMonth());
+        intent.putExtra("day", elemento.getDay());
         intent.putExtra("position", position);
 
         startActivityForResult(intent, 2);
@@ -162,6 +177,21 @@ public class Lista extends AppCompatActivity {
         datos.remove(position);
         adaptador.notifyDataSetChanged();
         mostrarToast("Elemento eliminado");
+    }
+
+    private void listarElemento(int position){
+        Encapsulador elem=datos.get(position);
+
+        Intent intent = new Intent(this, Mostrar.class);
+        intent.putExtra("titulo", elem.get_textoTitulo());
+        intent.putExtra("autor", elem.get_textoContenido());
+        intent.putExtra("rating", elem.get_rating());
+        intent.putExtra("year", elem.getYear());
+        intent.putExtra("month", elem.getMonth());
+        intent.putExtra("day", elem.getDay());
+        intent.putExtra("position", position);
+
+        startActivity(intent);
     }
 
     public void ordenarPorAutor(){
@@ -231,18 +261,25 @@ public class Lista extends AppCompatActivity {
         private int imagen;
         private String titulo, autor;
         private float dato1;
+        private int year, month, day;
 
-        public Encapsulador(int idImagen, String textoTitulo, String textoAutor, float numEstrellas){
+        public Encapsulador(int idImagen, String textoTitulo, String textoAutor, float numEstrellas, int year, int month, int day){
             this.imagen=idImagen;
             this.titulo=textoTitulo;
             this.autor=textoAutor;
             this.dato1=numEstrellas;
+            this.year=year;
+            this.month=month;
+            this.day=day;
         }
 
         public String get_textoTitulo(){return titulo;}
         public String get_textoContenido(){return autor;}
         public int get_idImagen(){return imagen;}
         public float get_rating(){return dato1;}
+        public int getYear(){return year;}
+        public int getMonth(){return month;}
+        public int getDay(){return day;}
     }
 }
 
