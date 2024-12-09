@@ -17,7 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class Insertar extends AppCompatActivity {
 
-    private TextView tituloInsertar;
+    private EditText tituloInsertar;
     private EditText autorInsertar;
     private RatingBar ratingInsertar;
     private DatePicker fechaInsertar;
@@ -29,7 +29,7 @@ public class Insertar extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_insertar);
 
-        tituloInsertar=(TextView) findViewById(R.id.tituloInsertar);
+        tituloInsertar=(EditText) findViewById(R.id.tituloInsertar);
         autorInsertar=(EditText) findViewById(R.id.autorInsertar);
         ratingInsertar=(RatingBar) findViewById(R.id.ratingInsertar);
         fechaInsertar=(DatePicker) findViewById(R.id.fechaInsertar);
@@ -37,6 +37,8 @@ public class Insertar extends AppCompatActivity {
 
         Intent intent=getIntent();
         if(intent!=null){
+            boolean isEdit = intent.getBooleanExtra("isEdit", false);
+
             tituloInsertar.setText(intent.getStringExtra("titulo"));
             autorInsertar.setText(intent.getStringExtra("autor"));
             ratingInsertar.setRating(intent.getFloatExtra("rating", 0));
@@ -45,6 +47,10 @@ public class Insertar extends AppCompatActivity {
             int month = intent.getIntExtra("month", 0);
             int day = intent.getIntExtra("day", 1);
             fechaInsertar.updateDate(year, month, day);
+
+            if(isEdit){
+                tituloInsertar.setEnabled(false);
+            }
         }
 
         botonGuardar.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +71,7 @@ public class Insertar extends AppCompatActivity {
         int position = getIntent().getIntExtra("position", -1);
 
         Intent intent=new Intent();
+        intent.putExtra("isEdit", false);
         intent.putExtra("titulo", titulo);
         intent.putExtra("autor", autor);
         intent.putExtra("rating", rating);

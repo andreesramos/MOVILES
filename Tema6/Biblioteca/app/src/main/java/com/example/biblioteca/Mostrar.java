@@ -38,12 +38,13 @@ public class Mostrar extends AppCompatActivity {
             autorMostrar.setText(intent.getStringExtra("autor"));
             ratingMostrar.setRating(intent.getFloatExtra("rating", 0));
 
+            fechaMostrar.setEnabled(false);  // Deshabilita el DatePicker
             int year = intent.getIntExtra("year", 2024);
             int month = intent.getIntExtra("month", 0);
             int day = intent.getIntExtra("day", 1);
             fechaMostrar.updateDate(year, month, day);
             //fechaMostrar.setDescendantFocusability(DatePicker.FOCUS_BLOCK_DESCENDANTS); //Bloque la interaccion del usuario
-            fechaMostrar.setEnabled(false);  // Deshabilita el DatePicker
+
         }
 
     }

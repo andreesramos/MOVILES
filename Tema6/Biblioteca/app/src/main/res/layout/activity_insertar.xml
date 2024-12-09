@@ -26,11 +26,12 @@
             android:textSize="20dp"
             android:gravity="center"/>
 
-        <TextView
+        <EditText
             android:id="@+id/tituloInsertar"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:textSize="18dp"/>
+            android:hint="Escribe aqui"
+            android:inputType="text"/>
     </LinearLayout>
 
     <LinearLayout

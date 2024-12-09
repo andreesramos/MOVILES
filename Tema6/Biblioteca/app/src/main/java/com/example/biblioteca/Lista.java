@@ -162,6 +162,7 @@ public class Lista extends AppCompatActivity {
         Encapsulador elemento=datos.get(position);
 
         Intent intent = new Intent(this, Insertar.class);
+        intent.putExtra("isEdit", true);
         intent.putExtra("titulo", elemento.get_textoTitulo());
         intent.putExtra("autor", elemento.get_textoContenido());
         intent.putExtra("rating", elemento.get_rating());
