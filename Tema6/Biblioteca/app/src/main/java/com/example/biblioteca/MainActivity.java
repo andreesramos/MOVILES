@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -59,6 +60,19 @@ public class MainActivity extends AppCompatActivity {
                 setLocale("es");
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        borrarArchivoHistorial();
+    }
+
+    private void borrarArchivoHistorial() {
+        File file = new File(getFilesDir(), "historial_acciones.txt");
+        if (file.exists()) {
+            file.delete();
+        }
     }
 
     public void acceder(View view){

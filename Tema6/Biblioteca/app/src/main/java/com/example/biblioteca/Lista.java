@@ -31,6 +31,7 @@ public class Lista extends AppCompatActivity {
     private ArrayList<Encapsulador> datos;
     private RatingBar rating;
     private Adaptador adaptador;
+    HistorialManager historialManager=new HistorialManager(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +86,8 @@ public class Lista extends AppCompatActivity {
         } else if (id==R.id.listadoRating) {
             ordenarPorRating();
             return true;
+        } else if (id==R.id.historial) {
+            mostrarHistorial();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -105,6 +108,7 @@ public class Lista extends AppCompatActivity {
                 datos.add(new Encapsulador(R.drawable.logo, titulo, autor, rating, year, month, day));
                 adaptador.notifyDataSetChanged();
                 mostrarToast("Elemento insertado");
+                historialManager.registrarAccion("Se insertó el libro '" + titulo + "'.");
             } else if (requestCode == 2) {
                 int position = data.getIntExtra("position", -1);
                 if (position != -1) {
@@ -118,13 +122,14 @@ public class Lista extends AppCompatActivity {
                     Encapsulador elemento = datos.get(position);
                     elemento.titulo = titulo;
                     elemento.autor = autor;
-                    elemento.dato1 = rating;
+                    elemento.estrellas = rating;
                     elemento.year = year;
                     elemento.month = month;
                     elemento.day = day;
 
                     adaptador.notifyDataSetChanged();
                     mostrarToast("Elemento modificado");
+                    historialManager.registrarAccion("Se editó el libro '" + titulo + "'.");
                 }
             }
         }
@@ -175,9 +180,11 @@ public class Lista extends AppCompatActivity {
     }
 
     private void eliminarElemento(int position) {
+        String t=datos.get(position).get_textoTitulo();
         datos.remove(position);
         adaptador.notifyDataSetChanged();
         mostrarToast("Elemento eliminado");
+        historialManager.registrarAccion("Se eliminó el libro '" + t + "'.");
     }
 
     private void listarElemento(int position){
@@ -217,6 +224,11 @@ public class Lista extends AppCompatActivity {
         mostrarToast("Lista ordenada por rating");
     }
 
+    public void mostrarHistorial(){
+        Intent intent=new Intent(this, Historial.class);
+        startActivity(intent);
+    }
+
     private void mostrarToast(String mensaje){
         LayoutInflater inflater=getLayoutInflater();
         View layout=inflater.inflate(R.layout.toast, null);
@@ -235,7 +247,7 @@ public class Lista extends AppCompatActivity {
     }
 
     public void mostrarDialogo(int position){
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        AlertDialog.Builder builder=new AlertDialog.Builder(this, R.style.CustomAlertDialog);
         builder.setMessage("¿SEGURO QUE QUIERES ELIMINAR?")
                 .setTitle("CONFIRMACIÓN")
                 .setIcon(R.drawable.eliminar);
@@ -261,14 +273,14 @@ public class Lista extends AppCompatActivity {
     class Encapsulador{
         private int imagen;
         private String titulo, autor;
-        private float dato1;
+        private float estrellas;
         private int year, month, day;
 
         public Encapsulador(int idImagen, String textoTitulo, String textoAutor, float numEstrellas, int year, int month, int day){
             this.imagen=idImagen;
             this.titulo=textoTitulo;
             this.autor=textoAutor;
-            this.dato1=numEstrellas;
+            this.estrellas =numEstrellas;
             this.year=year;
             this.month=month;
             this.day=day;
@@ -277,7 +289,7 @@ public class Lista extends AppCompatActivity {
         public String get_textoTitulo(){return titulo;}
         public String get_textoContenido(){return autor;}
         public int get_idImagen(){return imagen;}
-        public float get_rating(){return dato1;}
+        public float get_rating(){return estrellas;}
         public int getYear(){return year;}
         public int getMonth(){return month;}
         public int getDay(){return day;}

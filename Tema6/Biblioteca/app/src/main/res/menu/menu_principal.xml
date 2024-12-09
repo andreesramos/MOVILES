@@ -13,4 +13,8 @@
         android:id="@+id/listadoRating"
         android:title="Listado por rating"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/historial"
+        android:title="Historial de acciones"
+        app:showAsAction="never"/>
 </menu>
