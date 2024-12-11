@@ -57,41 +57,11 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="150dp"
+        android:layout_marginBottom="70dp"
         android:text="ACCEDER"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:onClick="acceder"/>
-
-    <Button
-        android:id="@+id/spanish"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SPANISH"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="50dp"
-        android:layout_marginLeft="50dp"/>
-
-    <Button
-        android:id="@+id/english"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ENGLISH"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/french"
-        app:layout_constraintStart_toEndOf="@+id/spanish"
-        android:layout_marginBottom="50dp"/>
-
-    <Button
-        android:id="@+id/french"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FRENCH"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="50dp"
-        android:layout_marginRight="50dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -36,30 +36,6 @@ public class MainActivity extends AppCompatActivity {
         usuarios.add(new Usuario("pablo", "pablo"));
         usuarios.add(new Usuario("marcos", "marcos"));
 
-        btnEnglish= (Button) findViewById(R.id.english);
-        btnFrench= (Button) findViewById(R.id.french);
-        btnSpanish = (Button) findViewById(R.id.spanish);
-
-        btnEnglish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setLocale("en");
-            }
-        });
-
-        btnFrench.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setLocale("fr");
-            }
-        });
-
-        btnSpanish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setLocale("es");
-            }
-        });
     }
 
     @Override
