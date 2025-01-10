@@ -29,15 +29,15 @@ public class Historial extends AppCompatActivity {
         textoHistorial.setText(historialManager.leerHistorial());
 
         // Botón para limpiar el historial
-        botonLimpiarHistorial.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                File file= new File(getFilesDir(), "historial_acciones.txt");
-                if(file.exists()){
-                    file.delete();
+            botonLimpiarHistorial.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    File file= new File(getFilesDir(), "historial_acciones.txt");
+                    if(file.exists()){
+                        file.delete();
+                    }
+                    textoHistorial.setText("Historial eliminado.");
                 }
-                textoHistorial.setText("Historial eliminado.");
-            }
-        });
+            });
     }
 }
