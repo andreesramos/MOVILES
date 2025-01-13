@@ -23,6 +23,9 @@ public class Contenido {
             this.textoDebajo = textoDebajo;
         }
 
+    }
+
+    static{
         ponerEntrada(new Lista_entrada("0", R.drawable.ima1, "DONUTS", "El 15 de septiembre de 2009, fue lanzado el SDK de Android 1.6 Donut, basado en el núcleo Linux 2.6.29. En la actualización se incluyen numerosas características nuevas."));
 
         ponerEntrada(new Lista_entrada("1", R.drawable.ima2, "FROYO", "El 20 de mayo de 2010, El SDK de Android 2.2 Froyo (Yogur helado) fue lanzado, basado en el núcleo Linux 2.6.32."));
@@ -38,8 +41,8 @@ public class Contenido {
         ponerEntrada(new Lista_entrada("6", R.drawable.ima7, "KITKAT", "Su nombre se debe a la chocolatina KitKat, de la empresa internacional Nestlé. Posibilidad de impresión mediante WIFI. WebViews basadas en el motor de Chromium."));
 
         ponerEntrada(new Lista_entrada("7", R.drawable.ima8, "LOLLIPOP", "Incluye Material Design, un diseño intrépido, colorido, y sensible interfaz de usuario para las experiencias coherentes e intuitivos en todos los dispositivos. Movimiento de respuesta natural, iluminación y sombras realistas y familiares elementos visuales hacen que sea más fácil de navegar su dispositivo."));
-    }
 
+    }
 
     private static void ponerEntrada(Lista_entrada entrada){
         ENT_LISTA.add(entrada);
