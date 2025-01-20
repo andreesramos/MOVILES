@@ -39,7 +39,7 @@ public class Contenido {
     }
 
     static{
-       ponerEntrada(new Lista_entrada("0", R.drawable.quijote, "DON QUIJOTE DE LA MANCHA", "MIGUEL DE CERVANTES", 0, 2024, 10, 24));
+        ponerEntrada(new Lista_entrada("0", R.drawable.quijote, "DON QUIJOTE DE LA MANCHA", "MIGUEL DE CERVANTES", 0, 2024, 10, 24));
         ponerEntrada(new Lista_entrada("1", R.drawable.principito, "EL PRINCIPITO", "ANTOINE DE SAINT-EXUPÉRY", 0, 2023, 6, 16));
         ponerEntrada(new Lista_entrada("2", R.drawable.anillos, "EL SEÑOR DE LOS ANILLOS", "J.R.R. TOLKIEN", 0, 2024, 0, 8));
 
