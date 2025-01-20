@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Biblioteca</string>
+    <string name="welcome_message">Bienvenido a la Biblioteca</string>
+</resources>

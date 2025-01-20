@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/insertar"
+        android:title="Insertar Libro"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/listadoAutor"
+        android:title="Listado por autor"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/listadoRating"
+        android:title="Listado por rating"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/historial"
+        android:title="Historial de acciones"
+        app:showAsAction="never"/>
+</menu>
