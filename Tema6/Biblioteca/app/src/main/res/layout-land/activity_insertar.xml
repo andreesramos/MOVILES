@@ -30,7 +30,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="150dp"
+                    android:layout_width="131dp"
                     android:layout_height="50dp"
                     android:text="TITULO: "
                     android:textStyle="bold"
@@ -54,7 +54,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="150dp"
+                    android:layout_width="131dp"
                     android:layout_height="50dp"
                     android:text="AUTOR: "
                     android:textStyle="bold"
@@ -71,13 +71,13 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="385dp"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="150dp"
+                    android:layout_width="131dp"
                     android:layout_height="60dp"
                     android:text="VALORACIÓN: "
                     android:textStyle="bold"
@@ -96,22 +96,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="20dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:text="FECHA: "
-                    android:textStyle="bold"
-                    android:textSize="20dp"
-                    android:gravity="right"/>
-
-            </LinearLayout>
-
             <Button
                 android:id="@+id/botonGuardar"
                 android:layout_width="wrap_content"
@@ -119,22 +103,30 @@
                 android:text="GUARDAR"
                 android:textSize="18dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="30dp"/>
 
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="FECHA: "
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:gravity="center"/>
+
             <DatePicker
                 android:id="@+id/fechaInsertar"
-                android:layout_width="255dp"
-                android:layout_height="400dp"
-                android:paddingBottom="10dp"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"/>
 
         </LinearLayout>
 
