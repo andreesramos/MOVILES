@@ -1,7 +1,0 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:forceDarkAllowed" tools:targetApi="29">false</item>
-        <item name="android:colorBackground">#E6F7FF</item>
-        <item name="android:windowBackground">#E6F7FF</item>
-    </style>
-</resources>

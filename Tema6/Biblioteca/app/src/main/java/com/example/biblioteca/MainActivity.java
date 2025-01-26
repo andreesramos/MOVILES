@@ -1,6 +1,8 @@
 package com.example.biblioteca;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -22,20 +24,20 @@ public class MainActivity extends AppCompatActivity {
     private EditText usuario;
     private EditText clave;
     ArrayList<Usuario> usuarios=new ArrayList<>();
-    Button btnEnglish;
-    Button btnFrench;
-    Button btnSpanish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+        usuario=(EditText) findViewById(R.id.usuario);
 
         usuarios.add(new Usuario("andres", "andres"));
         usuarios.add(new Usuario("pablo", "pablo"));
         usuarios.add(new Usuario("marcos", "marcos"));
 
+        SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
+        usuario.setText(preferences.getString("usuario", ""));
     }
 
     @Override
@@ -52,17 +54,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void acceder(View view){
-        usuario=(EditText) findViewById(R.id.usuario);
         clave=(EditText) findViewById(R.id.clave);
-
 
         String nombreIngresado=usuario.getText().toString();
         String claveIngresada=clave.getText().toString();
         boolean valido=false;
+        SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor= preferences.edit();
+
 
         for(Usuario u : usuarios){
             if(nombreIngresado.equals(u.getNombre()) && claveIngresada.equals(u.getClave())){
                 valido=true;
+                editor.putString("usuario", usuario.getText().toString());
+                editor.commit();
             }
         }
 
@@ -74,17 +79,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void setLocale(String languageCode) {
-        Locale locale = new Locale(languageCode);
-        Locale.setDefault(locale);
-
-        Resources resources = getResources();
-        Configuration config = resources.getConfiguration();
-        config.setLocale(locale);
-        resources.updateConfiguration(config, resources.getDisplayMetrics());
-
-        // Reiniciar la actividad para aplicar cambios
-        recreate();
-        Toast.makeText(this, "Idioma cambiado a " + languageCode, Toast.LENGTH_SHORT).show();
-    }
 }
