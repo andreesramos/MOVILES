@@ -21,6 +21,12 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -32,6 +38,7 @@ public class Lista extends AppCompatActivity {
     private RatingBar rating;
     private Adaptador adaptador;
     HistorialManager historialManager=new HistorialManager(this);
+    FloatingActionButton botonFlotante;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +72,15 @@ public class Lista extends AppCompatActivity {
         };
         lista.setAdapter(adaptador);
         registerForContextMenu(lista);
+
+        botonFlotante = (FloatingActionButton) findViewById(R.id.botonFlotante);
+        botonFlotante.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ins=new Intent(Lista.this, Insertar.class);
+                startActivityForResult(ins, 1);
+            }
+        });
     }
 
     @Override
@@ -76,9 +92,15 @@ public class Lista extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id=item.getItemId();
-        if(id==R.id.insertar){
-            Intent ins=new Intent(this, Insertar.class);
-            startActivityForResult(ins, 1);
+        if(id==R.id.info){
+            try{
+                InputStream fichero = getResources().openRawResource(R.raw.info);
+                BufferedReader miFichero = new BufferedReader(new InputStreamReader(fichero));
+                String linea = miFichero.readLine();
+                fichero.close();
+            }catch (IOException ex){
+                ex.printStackTrace();
+            }
             return true;
         } else if (id==R.id.listadoAutor) {
             ordenarPorAutor();
