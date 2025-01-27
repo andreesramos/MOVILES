@@ -1,1 +1,3 @@
-Información de la aplicación.
+Aquí va
+la información
+de la aplicación cambiada.

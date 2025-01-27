@@ -1,7 +1,11 @@
 package com.example.biblioteca;
 
+import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Gravity;
@@ -52,6 +56,7 @@ public class Lista extends AppCompatActivity {
         datos.add(new Encapsulador(R.drawable.principito, "EL PRINCIPITO", "ANTOINE DE SAINT-EXUPÉRY", 0, 2023, 6, 16));
         datos.add(new Encapsulador(R.drawable.anillos, "EL SEÑOR DE LOS ANILLOS", "J.R.R. TOLKIEN", 0, 2024, 0, 8));
 
+
         adaptador = new Adaptador(this, R.layout.entrada, datos) {
             @Override
             public void onEntrada(Object entrada, View view) {
@@ -96,7 +101,14 @@ public class Lista extends AppCompatActivity {
             try{
                 InputStream fichero = getResources().openRawResource(R.raw.info);
                 BufferedReader miFichero = new BufferedReader(new InputStreamReader(fichero));
-                String linea = miFichero.readLine();
+
+                StringBuilder texto = new StringBuilder();
+                String linea;
+                while ((linea = miFichero.readLine()) != null){
+                    texto.append(linea).append("\n");
+                }
+                mostrarDialogoInfo(texto.toString());
+                miFichero.close();
                 fichero.close();
             }catch (IOException ex){
                 ex.printStackTrace();
@@ -178,7 +190,7 @@ public class Lista extends AppCompatActivity {
             editarElemento(position);
             return true;
         }else if(item.getItemId() == R.id.eliminar){
-            mostrarDialogo(position);
+            mostrarDialogoElim(position);
             return true;
         }else{
             return super.onContextItemSelected(item);
@@ -268,7 +280,7 @@ public class Lista extends AppCompatActivity {
 
     }
 
-    public void mostrarDialogo(int position){
+    public void mostrarDialogoElim(int position){
         AlertDialog.Builder builder=new AlertDialog.Builder(this, R.style.CustomAlertDialog);
         builder.setMessage("¿SEGURO QUE QUIERES ELIMINAR?")
                 .setTitle("CONFIRMACIÓN")
@@ -290,6 +302,23 @@ public class Lista extends AppCompatActivity {
 
         AlertDialog dialogo= builder.create();
         dialogo.show();
+    }
+
+    public void mostrarDialogoInfo(String mensaje){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomAlertDialog);
+        builder.setMessage(mensaje)
+                .setTitle("INFORMACIÓN")
+                .setIcon(R.drawable.info);
+
+        builder.setPositiveButton("ENTENDIDO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        AlertDialog dialog=builder.create();
+        dialog.show();
     }
 
     class Encapsulador{
