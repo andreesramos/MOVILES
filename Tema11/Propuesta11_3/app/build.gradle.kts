@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "com.example.propuesta11_3"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.propuesta11_3"
