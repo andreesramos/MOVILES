@@ -1,10 +1,9 @@
-package com.example.miprimergrafico;
+package com.example.diagonalesdelcanvas;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.os.Bundle;
 import android.view.View;
 
@@ -25,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class MiVista extends View{
-        private final float escala;
         private final int ancho;
         private final int alto;
 
@@ -34,26 +32,27 @@ public class MainActivity extends AppCompatActivity {
 
             ancho = getResources().getDisplayMetrics().widthPixels;
             alto = getResources().getDisplayMetrics().heightPixels;
-
-            escala = (float) alto / 800;
         }
 
         @Override
         protected void onDraw(Canvas canvas){
-            Paint pincel=new Paint();
-            pincel.setTextSize(80);
+            Paint pincel = new Paint();
             pincel.setColor(Color.BLACK);
+            pincel.setTextSize(80);
 
-            canvas.drawText("width: " + ancho, 20 * escala, 80 * escala, pincel);
-            canvas.drawText("height: " + alto, 140 * escala, 80 * escala, pincel);
-            canvas.drawText("escala: " + escala, 20 * escala, 200 * escala, pincel);
+            canvas.drawColor(Color.YELLOW);
+            pincel.setTextAlign(Paint.Align.CENTER);
+            canvas.drawText("width: " + ancho, 700, 220, pincel);
+            canvas.drawText("height: " + alto, 700, 340, pincel);
+            canvas.drawText("right: " + ancho, 700, 460, pincel);
+            canvas.drawText("bottom: " + alto, 700, 580, pincel);
 
-            pincel.setColor(Color.GREEN);
+            pincel.setColor(Color.BLUE);
             pincel.setStrokeWidth(10);
-            canvas.drawLine(0, 80 * escala, ancho, 80 * escala, pincel);
 
-            pincel.setColor(Color.RED);
-            canvas.drawLine(20 * escala, 0, 20 * escala, alto, pincel);
+            canvas.drawLine(0, 0, ancho, alto, pincel);
+            canvas.drawLine(ancho, 0, 0, alto, pincel);
+
         }
     }
 }

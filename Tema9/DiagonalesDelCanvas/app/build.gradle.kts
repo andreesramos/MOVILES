@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.miprimergrafico"
+    namespace = "com.example.diagonalesdelcanvas"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.miprimergrafico"
+        applicationId = "com.example.diagonalesdelcanvas"
         minSdk = 22
         targetSdk = 34
         versionCode = 1
