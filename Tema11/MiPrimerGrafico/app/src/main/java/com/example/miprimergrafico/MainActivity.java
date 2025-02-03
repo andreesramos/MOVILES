@@ -1,6 +1,8 @@
 package com.example.miprimergrafico;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 
@@ -16,13 +18,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(new MiVista(this));
 
     }
 
     private class MiVista extends View{
         public MiVista(Context context){
             super(context);
+        }
+
+        @Override
+        protected void onDraw(Canvas canvas){
+            Paint pincel=new Paint();
+
+            String ancho="width: " + getMeasuredWidth();
+            String alto="height: " + getMeasuredHeight();
+
+
         }
     }
 }
