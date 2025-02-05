@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText usuario;
     private EditText clave;
     ArrayList<Usuario> usuarios=new ArrayList<>();
+    BaseDatos dbHelper = new BaseDatos(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
         /*usuarios.add(new Usuario("andres", "andres"));
         usuarios.add(new Usuario("pablo", "pablo"));
         usuarios.add(new Usuario("marcos", "marcos"));*/
+
+        /*dbHelper.insertarUsuario("andres", "andres");
+        dbHelper.insertarUsuario("julio", "julio");
+        dbHelper.insertarUsuario("manuel", "manuel");*/
 
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
         usuario.setText(preferences.getString("usuario", ""));
@@ -58,28 +63,17 @@ public class MainActivity extends AppCompatActivity {
 
         String nombreIngresado=usuario.getText().toString();
         String claveIngresada=clave.getText().toString();
-        boolean valido=false;
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor= preferences.edit();
 
-
-        for(Usuario u : usuarios){
-            if(nombreIngresado.equals(u.getNombre()) && claveIngresada.equals(u.getClave())){
-                valido=true;
-                editor.putString("usuario", usuario.getText().toString());
-                editor.commit();
-            }
+        boolean valido=validarUsuario(nombreIngresado, claveIngresada);
+        if (valido) {
+            editor.putString("usuario", nombreIngresado);
+            editor.commit();
         }
 
-        if(valido){
-            Intent acceder=new Intent(this, Lista.class);
-            startActivity(acceder);
-        }else{
-            Toast.makeText(MainActivity.this, "Usuario no existente o contraseña incorrecta", Toast.LENGTH_SHORT).show();
-        }
+
     }
-
-    BaseDatos dbHelper = new BaseDatos(this);
 
     public void registrarUsuario(String usuario, String clave) {
         long resultado = dbHelper.insertarUsuario(usuario, clave);
@@ -89,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Error al registrar usuario", Toast.LENGTH_SHORT).show();
         }
     }
-    public void validarUsuario(String usuario, String clave) {
+    public boolean validarUsuario(String usuario, String clave) {
         boolean valido = dbHelper.validarUsuario(usuario, clave);
         if (valido) {
             Intent intent = new Intent(this, Lista.class);
@@ -97,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
         }
+        return valido;
     }
 
 }
