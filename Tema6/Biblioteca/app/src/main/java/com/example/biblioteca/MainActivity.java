@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         usuario=(EditText) findViewById(R.id.usuario);
 
-        usuarios.add(new Usuario("andres", "andres"));
+        /*usuarios.add(new Usuario("andres", "andres"));
         usuarios.add(new Usuario("pablo", "pablo"));
-        usuarios.add(new Usuario("marcos", "marcos"));
+        usuarios.add(new Usuario("marcos", "marcos"));*/
 
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
         usuario.setText(preferences.getString("usuario", ""));
@@ -76,6 +76,26 @@ public class MainActivity extends AppCompatActivity {
             startActivity(acceder);
         }else{
             Toast.makeText(MainActivity.this, "Usuario no existente o contraseña incorrecta", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    BaseDatos dbHelper = new BaseDatos(this);
+
+    public void registrarUsuario(String usuario, String clave) {
+        long resultado = dbHelper.insertarUsuario(usuario, clave);
+        if (resultado != -1) {
+            Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Error al registrar usuario", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void validarUsuario(String usuario, String clave) {
+        boolean valido = dbHelper.validarUsuario(usuario, clave);
+        if (valido) {
+            Intent intent = new Intent(this, Lista.class);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
         }
     }
 
