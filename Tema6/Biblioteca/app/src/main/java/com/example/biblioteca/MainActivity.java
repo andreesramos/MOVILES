@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -23,8 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText usuario;
     private EditText clave;
-    ArrayList<Usuario> usuarios=new ArrayList<>();
+    //ArrayList<Usuario> usuarios=new ArrayList<>();
     BaseDatos dbHelper = new BaseDatos(this);
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,16 +43,24 @@ public class MainActivity extends AppCompatActivity {
 
         /*dbHelper.insertarUsuario("andres", "andres");
         dbHelper.insertarUsuario("julio", "julio");
-        dbHelper.insertarUsuario("manuel", "manuel");*/
+        dbHelper.insertarUsuario("manuel", "manuel");
+        dbHelper.insertarUsuario("eva", "eva");*/
 
         SharedPreferences preferences = getSharedPreferences("datos", Context.MODE_PRIVATE);
         usuario.setText(preferences.getString("usuario", ""));
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.intro);
+        mediaPlayer.setLooping(false);
+        mediaPlayer.start();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        borrarArchivoHistorial();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 
     private void borrarArchivoHistorial() {

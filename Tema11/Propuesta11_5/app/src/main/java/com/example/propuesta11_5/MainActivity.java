@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sndPool.play(soundId, 0.5f, 0.5f, 1, 0, frecuencia);
+                sndPool2.play(soundId2, 0.5f, 0.5f, 1, 0, frecuencia);
             }
         });
     }
