@@ -57,10 +57,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
     }
 
     private void borrarArchivoHistorial() {
@@ -98,6 +94,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean validarUsuario(String usuario, String clave) {
         boolean valido = dbHelper.validarUsuario(usuario, clave);
         if (valido) {
+            // Detener la música antes de cambiar de actividad
+            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+                mediaPlayer = null;
+            }
+
             Intent intent = new Intent(this, Lista.class);
             startActivity(intent);
         } else {

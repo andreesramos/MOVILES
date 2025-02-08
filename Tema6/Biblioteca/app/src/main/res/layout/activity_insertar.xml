@@ -20,7 +20,7 @@
 
         <TextView
             android:layout_width="150dp"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:text="TITULO: "
             android:textStyle="bold"
             android:textSize="20dp"
@@ -41,7 +41,7 @@
 
         <TextView
             android:layout_width="150dp"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:text="AUTOR: "
             android:textStyle="bold"
             android:textSize="20dp"
@@ -62,7 +62,7 @@
 
         <TextView
             android:layout_width="150dp"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:text="VALORACIÓN: "
             android:textStyle="bold"
             android:textSize="20dp"
@@ -86,11 +86,12 @@
 
         <TextView
             android:layout_width="150dp"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:text="FECHA: "
             android:textStyle="bold"
             android:textSize="20dp"
             android:gravity="center"/>
+
 
         <DatePicker
             android:id="@+id/fechaInsertar"
@@ -100,13 +101,35 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/botonGuardar"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="GUARDAR"
-        android:textSize="18dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"/>
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="20dp">
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/botonFlotante"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:src="@android:drawable/ic_menu_camera"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/botonGuardar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GUARDAR"
+            android:textSize="18dp"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
 </LinearLayout>
