@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Gravity;
@@ -28,6 +30,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -52,9 +56,15 @@ public class Lista extends AppCompatActivity {
         lista=(ListView) findViewById(R.id.lista);
         datos=new ArrayList<>();
 
-        datos.add(new Encapsulador(R.drawable.quijote, "DON QUIJOTE DE LA MANCHA", "MIGUEL DE CERVANTES", 0, 2024, 10, 24));
-        datos.add(new Encapsulador(R.drawable.principito, "EL PRINCIPITO", "ANTOINE DE SAINT-EXUPÉRY", 0, 2023, 6, 16));
-        datos.add(new Encapsulador(R.drawable.anillos, "EL SEÑOR DE LOS ANILLOS", "J.R.R. TOLKIEN", 0, 2024, 0, 8));
+        // Agregar libros con imagenes predeterminadas (se convierten en archivos locales)
+        datos.add(new Encapsulador(guardarImagenEnInterno(R.drawable.quijote, "quijote.jpg"),
+                "DON QUIJOTE DE LA MANCHA", "MIGUEL DE CERVANTES", 0, 2024, 10, 24));
+
+        datos.add(new Encapsulador(guardarImagenEnInterno(R.drawable.principito, "principito.jpg"),
+                "EL PRINCIPITO", "ANTOINE DE SAINT-EXUPÉRY", 0, 2023, 6, 16));
+
+        datos.add(new Encapsulador(guardarImagenEnInterno(R.drawable.anillos, "anillos.jpg"),
+                "EL SEÑOR DE LOS ANILLOS", "J.R.R. TOLKIEN", 0, 2024, 0, 8));
 
 
         adaptador = new Adaptador(this, R.layout.entrada, datos) {
@@ -66,12 +76,26 @@ public class Lista extends AppCompatActivity {
                     ImageView imagen_entrada=(ImageView) view.findViewById(R.id.imagen);
                     RatingBar miRating=(RatingBar) view.findViewById(R.id.rating);
 
-                    texto_superior_entrada.setText(((Lista.Encapsulador) entrada).get_textoTitulo());
-                    texto_inferior_entrada.setText(((Lista.Encapsulador) entrada).get_textoContenido());
-                    imagen_entrada.setImageResource(((Lista.Encapsulador)entrada).get_idImagen());
-                    miRating.setRating(((Lista.Encapsulador) entrada).get_rating());
+                    Encapsulador encapsulador = (Encapsulador) entrada;
 
-                    //onClickListener
+                    texto_superior_entrada.setText(encapsulador.get_textoTitulo());
+                    texto_inferior_entrada.setText(encapsulador.get_textoContenido());
+                    miRating.setRating(encapsulador.get_rating());
+                    //imagen_entrada.setImageResource(((Lista.Encapsulador)entrada).get_idImagen());
+
+
+                    // Cargar la imagen desde la ruta de archivo o desde recursos si no hay imagen capturada
+                    if (encapsulador.get_imagenPath() != null) {
+                        File imgFile = new File(encapsulador.get_imagenPath());
+                        if (imgFile.exists()) {
+                            Bitmap bitmap = BitmapFactory.decodeFile(encapsulador.get_imagenPath());
+                            imagen_entrada.setImageBitmap(bitmap);
+                        } else {
+                            imagen_entrada.setImageResource(R.drawable.logo); // Imagen por defecto
+                        }
+                    } else {
+                        imagen_entrada.setImageResource(R.drawable.logo); // Imagen por defecto si no hay foto
+                    }
                 }
             }
         };
@@ -88,6 +112,7 @@ public class Lista extends AppCompatActivity {
         });
     }
 
+    //Creacion menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_principal, menu);
@@ -138,8 +163,9 @@ public class Lista extends AppCompatActivity {
                 int year = data.getIntExtra("year", 0);
                 int month = data.getIntExtra("month", 0);
                 int day = data.getIntExtra("day", 0);
+                String imagenPath = data.getStringExtra("imagenPath"); // Obtener la imagen
 
-                datos.add(new Encapsulador(R.drawable.logo, titulo, autor, rating, year, month, day));
+                datos.add(new Encapsulador(imagenPath, titulo, autor, rating, year, month, day));
                 adaptador.notifyDataSetChanged();
                 mostrarToast("Elemento insertado");
                 historialManager.registrarAccion("Se insertó el libro '" + titulo + "'.");
@@ -152,6 +178,7 @@ public class Lista extends AppCompatActivity {
                     int year =data.getIntExtra("year", 0);
                     int month=data.getIntExtra("month", 0);
                     int day=data.getIntExtra("day", 0);
+                    String imagenPath = data.getStringExtra("imagenPath");
 
                     Encapsulador elemento = datos.get(position);
                     elemento.titulo = titulo;
@@ -160,6 +187,9 @@ public class Lista extends AppCompatActivity {
                     elemento.year = year;
                     elemento.month = month;
                     elemento.day = day;
+                    if (imagenPath != null) {
+                        elemento.imagenPath = imagenPath; // Actualizar la imagen si se cambió
+                    }
 
                     adaptador.notifyDataSetChanged();
                     mostrarToast("Elemento modificado");
@@ -169,6 +199,7 @@ public class Lista extends AppCompatActivity {
         }
     }
 
+    //Creacion de menu contextual
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -197,6 +228,7 @@ public class Lista extends AppCompatActivity {
         }
     }
 
+    //Editar elementos
     private void editarElemento(int position){
         Encapsulador elemento=datos.get(position);
 
@@ -213,6 +245,7 @@ public class Lista extends AppCompatActivity {
         startActivityForResult(intent, 2);
     }
 
+    //Eliminar elementos
     private void eliminarElemento(int position) {
         String t=datos.get(position).get_textoTitulo();
         datos.remove(position);
@@ -221,6 +254,7 @@ public class Lista extends AppCompatActivity {
         historialManager.registrarAccion("Se eliminó el libro '" + t + "'.");
     }
 
+    //Listar elementos
     private void listarElemento(int position){
         Encapsulador elem=datos.get(position);
 
@@ -321,14 +355,37 @@ public class Lista extends AppCompatActivity {
         dialog.show();
     }
 
+    //Metodo para guardar imágenes de R.drawable en almacenamiento interno
+    private String guardarImagenEnInterno(int resId, String nombreArchivo) {
+        File directory = getFilesDir();
+        File imageFile = new File(directory, nombreArchivo);
+
+        // Si la imagen ya está guardada, devolver la ruta
+        if (imageFile.exists()) {
+            return imageFile.getAbsolutePath();
+        }
+
+        // Convertir el recurso de imagen en un Bitmap
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resId);
+
+        try (FileOutputStream fos = new FileOutputStream(imageFile)) {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos); // Guardar en calidad 100%
+            return imageFile.getAbsolutePath();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
     class Encapsulador{
-        private int imagen;
+        private String imagenPath; // Almacena la ruta de la imagen
         private String titulo, autor;
         private float estrellas;
         private int year, month, day;
 
-        public Encapsulador(int idImagen, String textoTitulo, String textoAutor, float numEstrellas, int year, int month, int day){
-            this.imagen=idImagen;
+        public Encapsulador(String imagenPath, String textoTitulo, String textoAutor, float numEstrellas, int year, int month, int day){
+            this.imagenPath=imagenPath;
             this.titulo=textoTitulo;
             this.autor=textoAutor;
             this.estrellas =numEstrellas;
@@ -339,7 +396,7 @@ public class Lista extends AppCompatActivity {
 
         public String get_textoTitulo(){return titulo;}
         public String get_textoContenido(){return autor;}
-        public int get_idImagen(){return imagen;}
+        public String get_imagenPath(){return imagenPath;} // Obtener la ruta de la imagen
         public float get_rating(){return estrellas;}
         public int getYear(){return year;}
         public int getMonth(){return month;}
