@@ -115,7 +115,7 @@ public class Insertar extends AppCompatActivity {
         }
     }
 
-    // Método para abrir la cámara
+    // Metodo para abrir la cámara
     private void abrirCamara() {
         Intent intentCamara = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (intentCamara.resolveActivity(getPackageManager()) != null) {
