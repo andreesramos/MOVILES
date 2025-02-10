@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.widget.Button;
 import android.widget.VideoView;
 
@@ -15,7 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity implements SurfaceHolder.Callback {
 
-    private VideoView surfaceView;
+    private SurfaceView surface;
     private Button botonGrabar, botonPausa, botonPlay;
     private MediaRecorder grabador;
     private MediaPlayer reproductor;
@@ -26,12 +27,13 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        surfaceView=(VideoView) findViewById(R.id.surfaceView);
+        surface=(SurfaceView) findViewById(R.id.surface);
         botonGrabar=(Button) findViewById(R.id.botonGrabar);
         botonPausa=(Button) findViewById(R.id.botonPausa);
         botonPlay=(Button) findViewById(R.id.botonPlay);
 
-        surfaceView.getHolder().addCallback(this);
+        surface.getHolder().addCallback(this);
+        surface.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
     }
 

@@ -23,8 +23,8 @@
         android:textSize="18dp"
         android:padding="20dp"/>
 
-    <VideoView
-        android:id="@+id/surfaceView"
+    <SurfaceView
+        android:id="@+id/surface"
         android:layout_width="640px"
         android:layout_height="520px"/>
 
