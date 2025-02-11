@@ -47,7 +47,8 @@
             android:layout_height="wrap_content"
             android:text="PARAR"
             android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginLeft="20dp"
+            android:enabled="false"/>
 
         <Button
             android:id="@+id/botonPlay"
