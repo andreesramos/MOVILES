@@ -6,6 +6,7 @@ import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.hardware.Camera;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -43,20 +45,25 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { // Solo en API 23+
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
                     ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED ||
                     ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-                requestPermissions();
+                ActivityCompat.requestPermissions(this, new String[]{
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.RECORD_AUDIO,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                }, 100);
             }
         }
+
 
         surface=(SurfaceView) findViewById(R.id.surface);
         botonGrabar=(Button) findViewById(R.id.botonGrabar);
         botonPausa=(Button) findViewById(R.id.botonPausa);
         botonPlay=(Button) findViewById(R.id.botonPlay);
-        ruta= Environment.getExternalStorageDirectory() + "/mivideo.mp4";
+        ruta = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES) + "/mivideo.mp4";
 
         surface.getHolder().addCallback(this);
         surface.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -64,32 +71,33 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         botonGrabar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (grabador == null) {
+                if (grabador != null) {
+                    grabador.reset();
+                }else{
                     grabador = new MediaRecorder();
                 }
 
-                grabador.setAudioSource(MediaRecorder.AudioSource.MIC);
-                grabador.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-                grabador.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-                grabador.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
-                grabador.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
-                grabador.setOutputFile(ruta);
-
                 try{
-                    grabador.prepare();
-                }catch (IllegalStateException e){
-                    e.printStackTrace();
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
+                    grabador.setAudioSource(MediaRecorder.AudioSource.MIC);
+                    grabador.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+                    grabador.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+                    grabador.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
+                    grabador.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
+                    grabador.setOutputFile(ruta);
 
-                if (grabador != null) {
+                    grabador.prepare();
                     grabador.start();
                     grabando = true;
-                } else {
-                    Toast.makeText(MainActivity.this, "Error, grabador no inicializado", Toast.LENGTH_SHORT).show();
-                }
 
+                    botonGrabar.setEnabled(false);
+                    botonPausa.setEnabled(true);
+                    botonPlay.setEnabled(false);
+
+                    Toast.makeText(MainActivity.this, "Grabando...", Toast.LENGTH_SHORT).show();
+                } catch (IllegalStateException | IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(MainActivity.this, "Error al iniciar la grabación", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -97,13 +105,23 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
             @Override
             public void onClick(View v) {
                 if(grabando){
-                    grabador.stop();
-                    grabador.reset();
-                    grabando=false;
+                    try{
+                        grabador.stop();
+                        grabador.release();
+                        grabador=null;
+                        grabando=false;
+
+                        botonGrabar.setEnabled(true);
+                        botonPausa.setEnabled(false);
+                        botonPlay.setEnabled(true);
+
+                        Toast.makeText(MainActivity.this, "Grabación detenida", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(MainActivity.this, "Error al detener la grabación", Toast.LENGTH_SHORT).show();
+                    }
                 }else{
-                    reproductor.stop();
-                    reproductor.reset();
-                    botonPlay.setText("PLAY");
+                    Toast.makeText(MainActivity.this, "No se está grabando", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -111,7 +129,20 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         botonPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!reproductor.isPlaying()){
+                if (reproductor == null) {
+                    reproductor = new MediaPlayer();
+                }
+
+                try {
+                    reproductor.setDataSource(ruta);
+                    reproductor.setDisplay(surface.getHolder());
+                    reproductor.prepare();
+                    reproductor.start();
+
+                    botonGrabar.setEnabled(false);
+                    botonPausa.setEnabled(false);
+                    botonPlay.setEnabled(false);
+
                     reproductor.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
@@ -120,19 +151,11 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
                             botonPlay.setEnabled(true);
                         }
                     });
-                    if(reproductor.getCurrentPosition() == reproductor.getDuration()){
-                        try{
-                            reproductor.setDataSource(ruta);
-                            reproductor.prepare();
-                        }catch (IllegalStateException e){
-                            e.printStackTrace();
-                        }catch (IOException e){
-                            e.printStackTrace();
-                        }
-                    }
-                        reproductor.start();
-                }else {
-                    reproductor.pause();
+
+                    Toast.makeText(MainActivity.this, "Reproduciendo...", Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(MainActivity.this, "Error al reproducir", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -164,37 +187,5 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         }
     }
 
-    private void requestPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
-                    ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED ||
-                    ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-
-                ActivityCompat.requestPermissions(this, new String[]{
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.RECORD_AUDIO,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                }, 100);
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == 100) {
-            if (grantResults.length > 0) {
-                boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                boolean audioAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-                boolean storageAccepted = grantResults.length > 2 && grantResults[2] == PackageManager.PERMISSION_GRANTED;
-
-                if (!cameraAccepted || !audioAccepted || !storageAccepted) {
-                    // Mensaje si los permisos son rechazados
-                    Toast.makeText(this, "Se necesitan permisos para grabar", Toast.LENGTH_LONG).show();
-                }
-            }
-        }
-    }
 
 }

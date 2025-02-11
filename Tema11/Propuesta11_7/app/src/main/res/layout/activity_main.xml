@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="FICHERO DESTINO: "
+        android:text="FICHERO DESTINO: MIVIDEO.MP4"
         android:textSize="18dp"
         android:padding="20dp"/>
 
@@ -46,8 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="PARAR"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
             android:enabled="false"/>
 
         <Button
