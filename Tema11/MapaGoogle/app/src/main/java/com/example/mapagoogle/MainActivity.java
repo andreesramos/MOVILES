@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,7 +26,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
@@ -75,13 +75,17 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             if (location != null) {
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
-                fetchNearbyPlaces(userLocation, "restaurant"); // Muestra restaurantes por defecto
+                fetchNearbyPlaces(userLocation, "restaurant");
             }
         });
     }
 
     private void searchPlaces() {
-        String placeType = searchBox.getText().toString();
+        String inputPlaceType = searchBox.getText().toString().trim().toLowerCase();
+        if (inputPlaceType.equals("hotel")) inputPlaceType = "lodging";
+
+        final String placeType = inputPlaceType;
+
         if (!placeType.isEmpty()) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
@@ -105,45 +109,39 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void fetchNearbyPlaces(LatLng location, String placeType) {
-        String apiKey = "AIzaSyAbs0e2oc2dDKGzE0SBCU4AGjSqk08U0-Y";
+        String apiKey = getString(R.string.google_maps_key);
         String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
                 "location=" + location.latitude + "," + location.longitude +
-                "&radius=1500&type=" + placeType + "&key=" + apiKey;
+                "&radius=5000&type=" + placeType + "&key=" + apiKey;
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            mMap.clear();
-                            JSONArray results = response.getJSONArray("results");
-                            for (int i = 0; i < results.length(); i++) {
-                                JSONObject place = results.getJSONObject(i);
-                                JSONObject location = place.getJSONObject("geometry").getJSONObject("location");
-                                LatLng latLng = new LatLng(location.getDouble("lat"), location.getDouble("lng"));
-                                String name = place.getString("name");
-
-                                mMap.addMarker(new MarkerOptions().position(latLng).title(name));
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                response -> {
+                    try {
+                        Log.d("API_RESPONSE", response.toString());
+                        mMap.clear();
+                        JSONArray results = response.getJSONArray("results");
+                        if (results.length() == 0) {
+                            Toast.makeText(this, "No se encontraron lugares", Toast.LENGTH_SHORT).show();
+                            return;
                         }
+                        for (int i = 0; i < results.length(); i++) {
+                            JSONObject place = results.getJSONObject(i);
+                            JSONObject locationObj = place.getJSONObject("geometry").getJSONObject("location");
+                            LatLng latLng = new LatLng(locationObj.getDouble("lat"), locationObj.getDouble("lng"));
+                            String name = place.getString("name");
+
+                            mMap.addMarker(new MarkerOptions().position(latLng).title(name));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this, "Error obteniendo datos", Toast.LENGTH_SHORT).show();
-            }
-        });
+                }, error -> Toast.makeText(MainActivity.this, "Error obteniendo datos", Toast.LENGTH_SHORT).show());
+
         requestQueue.add(request);
     }
 
     private void toggleMapType() {
-        if (isSatellite) {
-            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        } else {
-            mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        }
+        mMap.setMapType(isSatellite ? GoogleMap.MAP_TYPE_NORMAL : GoogleMap.MAP_TYPE_SATELLITE);
         isSatellite = !isSatellite;
     }
 
