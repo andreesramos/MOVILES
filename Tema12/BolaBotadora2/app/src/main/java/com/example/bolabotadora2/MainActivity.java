@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
             while (continuar) {
                 tiempo += dt;
-                velocidad += aceleracion;
                 y += (int) (velocidad * dt);
 
                 if (y > ymax) {
