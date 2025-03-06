@@ -20,9 +20,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public GameView(Context context) {
         super(context);
         getHolder().addCallback(this);
+
+        int screenWidth = getResources().getDisplayMetrics().widthPixels;
+        int screenHeight = getResources().getDisplayMetrics().heightPixels;
+
         pacman = new Player(100, 100, 50);
-        ghost = new Ghost(300, 300, 50);
-        maze = new Maze();
+        ghost = new Ghost(300, 300, 30);
+        maze = new Maze(screenWidth, screenHeight);
         setFocusable(true);
     }
 
@@ -52,13 +56,21 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            touchX = event.getX();
-            touchY = event.getY();
-            pacman.move(touchX, touchY, maze);
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN: // Inicio del gesto
+                touchX = event.getX();
+                touchY = event.getY();
+                return true;
+
+            case MotionEvent.ACTION_UP: // Fin del gesto (determinar dirección)
+                float deltaX = event.getX() - touchX;
+                float deltaY = event.getY() - touchY;
+                pacman.moveBySwipe(deltaX, deltaY, maze);
+                return true;
         }
-        return true;
+        return super.onTouchEvent(event);
     }
+
 
     public void update() {
         pacman.update();

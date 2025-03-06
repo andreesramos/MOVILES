@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 public class Maze {
-    public static final int CELL_SIZE = 100; // Ajusta este valor según el tamaño de la pantalla
+    public static int CELL_SIZE;
     private int[][] maze = {
             {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
             {1,3,2,2,2,2,2,1,2,2,2,2,2,3,1},
@@ -22,10 +22,22 @@ public class Maze {
             {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
     };
 
+    public Maze(int screenWidth, int screenHeight) {
+        int rows = maze.length;
+        int cols = maze[0].length;
+        CELL_SIZE = Math.min(screenWidth / cols, screenHeight / rows);
+    }
+
     public boolean isWall(float x, float y, int size) {
-        int col = (int) (x / 50);
-        int row = (int) (y / 50);
-        return maze[row][col] == 1;
+        int col = (int) ((x - size / 2) / CELL_SIZE);
+        int row = (int) ((y - size / 2) / CELL_SIZE);
+
+        // Evitar que acceda a índices fuera de rango
+        if (row < 0 || row >= maze.length || col < 0 || col >= maze[0].length) {
+            return true;
+        }
+
+        return maze[row][col] == 1; // Devuelve true si es una pared
     }
 
     public void draw(Canvas canvas, Paint paint) {

@@ -10,9 +10,11 @@ public class Player {
     private int size;
 
     public Player(float x, float y, int size) {
-        this.x = x;
-        this.y = y;
-        this.size = size;
+        int gridX = Math.round(x / Maze.CELL_SIZE);
+        int gridY = Math.round(y / Maze.CELL_SIZE);
+        this.x = gridX * Maze.CELL_SIZE + Maze.CELL_SIZE / 2;
+        this.y = gridY * Maze.CELL_SIZE + Maze.CELL_SIZE / 2;
+        this.size = size / 2;
     }
 
     public void move(float newX, float newY, Maze maze) {
@@ -25,6 +27,27 @@ public class Player {
         }
     }
 
+    public void moveBySwipe(float deltaX, float deltaY, Maze maze) {
+        int gridX = Math.round(this.x / Maze.CELL_SIZE);
+        int gridY = Math.round(this.y / Maze.CELL_SIZE);
+
+        int newGridX = gridX;
+        int newGridY = gridY;
+
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            newGridX += (deltaX > 0 ? 1 : -1);
+        } else {
+            newGridY += (deltaY > 0 ? 1 : -1);
+        }
+
+        float newX = newGridX * Maze.CELL_SIZE + Maze.CELL_SIZE / 2;
+        float newY = newGridY * Maze.CELL_SIZE + Maze.CELL_SIZE / 2;
+
+        if (!maze.isWall(newX, newY, size)) {
+            this.x = newX;
+            this.y = newY;
+        }
+    }
 
     public void update() {}
 
