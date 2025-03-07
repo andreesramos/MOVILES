@@ -41,6 +41,7 @@ public class Maze {
     }
 
     public void draw(Canvas canvas, Paint paint) {
+
         paint.setColor(Color.BLUE);
         for (int row = 0; row < maze.length; row++) {
             for (int col = 0; col < maze[0].length; col++) {
@@ -50,6 +51,7 @@ public class Maze {
                 }
             }
         }
+
     }
 
     public int getHeight() {

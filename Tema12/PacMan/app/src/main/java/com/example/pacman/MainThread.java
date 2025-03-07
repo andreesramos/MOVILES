@@ -19,17 +19,29 @@ public class MainThread extends Thread {
         this.running = running;
     }
 
+    public void requestRedraw() {
+        gameView.postInvalidate();
+    }
+
     @Override
     public void run() {
         long targetTime = 1000 / FPS;
+        System.out.println("MainThread: Hilo iniciado...");
         while (running) {
             long startTime = System.nanoTime();
             Canvas canvas = null;
             try {
                 canvas = surfaceHolder.lockCanvas();
+                if (canvas == null) {
+                    System.out.println("MainThread: Canvas es NULL, no se puede dibujar.");
+                    continue; // Si es null, saltamos este ciclo
+                }
                 synchronized (surfaceHolder) {
-                    gameView.update();
-                    gameView.draw(canvas);
+                    if (canvas != null) { // Asegura que el canvas no sea null
+                        System.out.println("MainThread: Llamando a update() y draw()...");
+                        gameView.update();
+                        gameView.draw(canvas);
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -38,6 +50,7 @@ public class MainThread extends Thread {
                     surfaceHolder.unlockCanvasAndPost(canvas);
                 }
             }
+            requestRedraw(); // Forzar redibujado
             long elapsedTime = (System.nanoTime() - startTime) / 1000000;
             long waitTime = targetTime - elapsedTime;
             try {
